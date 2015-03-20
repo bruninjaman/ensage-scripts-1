@@ -95,7 +95,6 @@ function Load()
 			script:Disable() 
 		else
 			Play = true
-			victim = nil
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
