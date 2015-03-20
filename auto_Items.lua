@@ -34,7 +34,7 @@ function Tick(tick)
 
 	if me.alive and not me:IsInvisible() and not me:IsChanneling() then
 
-		if enableQuickbuy and me.health/me.maxHealth < 0.2 then
+		if enableQuickbuy and me.health/me.maxHealth < 0.09 then
 			client:ExecuteCmd("dota_purchase_quickbuy")
 		end
 
