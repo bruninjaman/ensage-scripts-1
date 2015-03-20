@@ -108,6 +108,7 @@ function GameClose()
 		text.visible = false
 		main.visible = false
 		script:UnregisterEvent(Tick)
+		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
 	end
 end
