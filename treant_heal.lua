@@ -31,7 +31,7 @@ function Tick( tick )
 		
 		local heal = me:GetAbility(3)
 	
-		if me.alive and not me:IsStunned() and heal and heal:CanBeCasted() then
+		if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
 		
 			if me.health/me.maxHealth < HealthTeam then
 				text.text = ""..me.name
