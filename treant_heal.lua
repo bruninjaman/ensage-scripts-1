@@ -4,12 +4,14 @@ require("libs.ScriptConfig")
 config = ScriptConfig.new()
 config:SetParameter("Active", "T", config.TYPE_HOTKEY)
 config:SetParameter("SoulRing", true)
+config:SetParameter("Self", 0.5)
 config:SetParameter("Team", 0.8)
 config:SetParameter("Tower", 0.3)
 config:Load()
 
 toggleKey = config.Active
 UseSoulRing = config.SoulRing
+HealthSelf = config.Self
 HealthTeam = config.Team
 HealthTower = config.Tower
 
@@ -33,7 +35,7 @@ function Tick( tick )
 	
 		if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
 		
-			if me.health/me.maxHealth < HealthTeam then
+			if me.health/me.maxHealth < HealthSelf then
 				text.text = ""..me.name
 				SoulRingf()
 				me:CastAbility(heal,me)
