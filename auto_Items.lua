@@ -34,35 +34,39 @@ function Tick(tick)
 
 	if me.alive and not me:IsInvisible() and not me:IsChanneling() then
 
-		if enableQuickbuy and me.health/me.maxHealth < 0.4 then
+		if enableQuickbuy and me.health/me.maxHealth < 0.2 then
 			client:ExecuteCmd("dota_purchase_quickbuy")
 		end
 
-		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.1 then
+		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
 			me:CastAbility(bloodstone,me.position)
+			Sleep(1000)
 		end
 
 		if enableBottle and bottle and bottle:CanBeCasted() and me:DoesHaveModifier("modifier_fountain_aura_buff") and not me:DoesHaveModifier("modifier_bottle_regeneration") and (me.health < me.maxHealth or me.mana < me.maxMana) then
 			me:CastAbility(bottle)
+			Sleep(1000)
 		end
 
 		if enablePhaseBoots and phaseboots and phaseboots:CanBeCasted() then
 			me:CastAbility(phaseboots)
+			Sleep(1000)
 		end
 
 		if enableMagicStick and stick and stick:CanBeCasted() and stick.charges > 0 and me.health/me.maxHealth < 0.3 then
 			me:CastAbility(stick)
+			Sleep(1000)
 		end
 
 		if enableMidas and midas and midas:CanBeCasted() then
 			for _,v in ipairs(creeps) do
 				if GetDistance2D(me,v) < 700 and v:CanDie() and v.maxHealth >= 950 and v.ancient == false and v.level >= 5 then
 					me:CastAbility(midas,v)
+					Sleep(1000)
 				end
 			end
 		end
 	end
-	Sleep(250)
 end
 
 function Load()
