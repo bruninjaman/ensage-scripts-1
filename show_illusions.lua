@@ -1,6 +1,7 @@
--- Load
-
-local heroTable = {} local illusionTable = {} local me = nil local Play = false  local sleepTick = 0
+local Play = false
+local sleepTick = 0
+local heroTable = {}
+local illusionTable = {}   
 
 function Tick(tick)
 	if not PlayingGame() or not SleepCheck() then return end
