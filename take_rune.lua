@@ -48,6 +48,8 @@ function Load()
 			script:Disable()
 		else
 			play = true
+			rec1.visible = true
+			rec2.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
