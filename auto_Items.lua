@@ -34,11 +34,11 @@ function Tick(tick)
 
 	if me.alive and not me:IsInvisible() and not me:IsChanneling() then
 
-		if enableQuickbuy and me.health/me.maxHealth < 0.07 then
+		if enableQuickbuy and me.health/me.maxHealth < 0.09 then
 			client:ExecuteCmd("dota_purchase_quickbuy")
 		end
 
-		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.02 then
+		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
 			me:CastAbility(bloodstone,me.position)
 			Sleep(1000)
 		end
@@ -85,9 +85,9 @@ end
 function GameClose()
 	collectgarbage("collect")
 	if play then
-		Play = false 	
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
+		Play = false
 	end
 end
 

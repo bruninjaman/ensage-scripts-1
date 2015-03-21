@@ -384,17 +384,17 @@ function Load()
 end
 
 function Close()
+	timers = {}
+	entities = {}
+	wisp = {}
+	sleeptick = 0
+	modifs = {}
 	collectgarbage("collect")
 	if Play then
-		Play = false
-		timers = {}
-		entities = {}
-		wisp = {}
-		sleeptick = 0
-		modifs = {}
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Modifadd)
 		script:RegisterEvent(EVENT_TICK,Load)
+		play = false
 	end
 end
 

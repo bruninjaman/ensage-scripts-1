@@ -91,10 +91,11 @@ function Load()
 end
 
 function GameClose()
+	Toggle,Toggle_1 = false,false
 	collectgarbage("collect")
 	if play then
-		Play,Toggle,Toggle_1 = false,false,false
 		script:RegisterEvent(EVENT_TICK,Load)
+		Play = false
 	end
 end
 

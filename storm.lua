@@ -177,7 +177,6 @@ function Close()
 	victim = nil
 	start = false
 	resettime = nil
-	
 	if reg then
 		script:UnregisterEvent(Main)
 		script:RegisterEvent(EVENT_TICK,Load)
