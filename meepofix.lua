@@ -40,8 +40,8 @@ hotkey10 = config.hpPercentL
 hotkey11 = config.poofseltofirstsel -- poof selected meepo's to first selected meepo
 
 -- Code
-local font = drawMgr:CreateFont("meepofont","Calibri",14,500)
-local text = drawMgr:CreateText(x,y,-1,"Meepo script: NOT ACTIVE",font) text.visible = false
+local font = drawMgr:CreateFont("meepofont","Calibri",14,600)
+local text = drawMgr:CreateText(x,y,0x6CF58CFF,"Meepo script: NOT ACTIVE",font) text.visible = false
 local Play = false
 local activated = false
 local fount = {false,false,false,false,false}
