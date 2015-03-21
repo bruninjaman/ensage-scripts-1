@@ -321,11 +321,11 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Meepo then 
 			script:Disable() 
 		else
-		text.visible = true
-		Play = true
-		script:RegisterEvent(EVENT_TICK,Tick)
-		script:RegisterEvent(EVENT_KEY,Key)
-		script:UnregisterEvent(Load)
+			Play = true
+			text.visible = true
+			script:RegisterEvent(EVENT_TICK,Tick)
+			script:RegisterEvent(EVENT_KEY,Key)
+			script:UnregisterEvent(Load)
 		end
 	end	
 end
