@@ -45,7 +45,6 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_CLOSE,GameClose)
 			script:UnregisterEvent(Load)
