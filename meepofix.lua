@@ -45,7 +45,6 @@ local text = drawMgr:CreateText(x,y,-1,"Meepo script: NOT ACTIVE",font) text.vis
 local Play = false
 local activated = false
 local fount = {false,false,false,false,false}
-local unreg = false
 local com = false
 local meeponumb = {}
 local ordered = {}
@@ -335,7 +334,6 @@ function Close()
 	text.visible = false
 	activated = false
 	fount = {false,false,false,false,false}
-	unreg = false
 	com = false
 	ordered = {}
 	meeponumb = {}
@@ -344,6 +342,7 @@ function Close()
 		script:UnregisterEvent(Key)
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
+		Play = false
 	end
 end
 
