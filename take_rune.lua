@@ -57,9 +57,9 @@ end
 
 function Close()
 	collectgarbage("collect")
+	rec1.visible = false
+	rec2.visible = false
 	if play then
-		rec1.visible = false
-		rec2.visible = false
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
