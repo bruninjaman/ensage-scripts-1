@@ -338,7 +338,7 @@ function Close()
 	ordered = {}
 	meeponumb = {}
 	collectgarbage("collect")
-	if not Play then
+	if Play then
 		script:UnregisterEvent(Key)
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
