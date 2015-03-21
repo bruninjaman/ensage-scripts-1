@@ -16,7 +16,7 @@ HealthTeam = config.Team
 HealthTower = config.Tower
 
 local Play = false
-local myFont = drawMgr:CreateFont("myFont","Calibri",14,500)
+local myFont = drawMgr:CreateFont("myFont","Tahoma",14,500)
 local main = drawMgr:CreateText(20,50,0x6CF58CFF,"Auto Heal On",myFont) main.visible = false
 local text = drawMgr:CreateText(20,65,0x6CF58CFF,"No target",myFont) text.visible = false
 
