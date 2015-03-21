@@ -218,6 +218,7 @@ end
 
 function Tick(tick)
 	if not PlayingGame() then return end
+	local me = entityList:GetMyHero() if not me then return end
 	if com and tick > sleep[2] then
 		com = false
 		eff = nil
@@ -321,11 +322,11 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Meepo then 
 			script:Disable() 
 		else
-		text.visible = true
-		Play = true
-		script:RegisterEvent(EVENT_TICK,Tick)
-		script:RegisterEvent(EVENT_KEY,Key)
-		script:UnregisterEvent(Load)
+			text.visible = true
+			Play = true
+			script:RegisterEvent(EVENT_TICK,Tick)
+			script:RegisterEvent(EVENT_KEY,Key)
+			script:UnregisterEvent(Load)
 		end
 	end	
 end
