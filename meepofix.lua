@@ -173,9 +173,9 @@ function Key(msg,code)
 			local meepos = entityList:FindEntities({ type = LuaEntity.TYPE_MEEPO, alive = true})
 			local throw = true
 			for i,v in ipairs(meepos) do 
-				local catch = v:GetAbility(1)
-				if throw and catch and catch:CanBeCasted() and GetDistance2D(target.position,v.position) <= catch.castRange then
-					v:CastAbility(catch,Vector(target.position.x+220*math.cos(target.rotR), target.position.y+220*math.sin(target.rotR), target.position.z))
+				local spell = v:GetAbility(1)
+				if throw and spell and spell:CanBeCasted() and GetDistance2D(target.position,v.position) <= spell.castRange then
+					v:CastAbility(spell,Vector(target.position.x+220*math.cos(target.rotR), target.position.y+220*math.sin(target.rotR), target.position.z))
 					v:Attack(target,true)
 					sleep[3] = GetTick() + 1500
 					throw = false
