@@ -46,7 +46,6 @@ function Load()
 			script:Disable()
 		else
 			script:RegisterEvent(EVENT_TICK,Tick)
-			script:RegisterEvent(EVENT_CLOSE,GameClose)
 			script:UnregisterEvent(Load)
 		end
 	end
