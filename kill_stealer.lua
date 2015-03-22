@@ -49,7 +49,7 @@ function Tick(tick)
 	local me = entityList:GetMyHero()	
 	if not me then return end
 	local ID = me.classId
-	if ID ~= myhero then GameClose() end
+	if ID ~= myhero then Close() end
 
 	if not dmgg then 
 		Sleep(150) 
@@ -1016,7 +1016,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	rect.visible = false
 	icon.visible = false
 	dmgCalc.visible = false
@@ -1032,5 +1032,5 @@ function GameClose()
 	end
 end
 
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

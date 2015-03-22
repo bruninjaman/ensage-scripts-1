@@ -25,7 +25,7 @@ function Tick(tick)
 	local me = entityList:GetMyHero()	
 	if not me then return end
 	local ID = me.classId
-	if ID ~= myhero then GameClose() end
+	if ID ~= myhero then Close() end
 
 	cullingblade.entity = me 
 	cullingblade.entityPosition = Vector(0,0,me.healthbarOffset)
@@ -180,7 +180,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	cullingblade.visible = false
 	blink.visible = false
 	hero = {}
@@ -194,5 +194,5 @@ function GameClose()
 	end
 end
 
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)
