@@ -21,43 +21,54 @@ local main = drawMgr:CreateText(20,50,0x6CF58CFF,"Auto Heal On",myFont) main.vis
 local text = drawMgr:CreateText(20,65,0x6CF58CFF,"No target",myFont) text.visible = false
 
 function Tick( tick )
-    if not PlayingGame() or not SleepCheck() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
-	local heal = me:GetAbility(3)
+	if not PlayingGame() or not SleepCheck() then return end 
+	local me = entityList:GetMyHero() if not me then Close() end
+		
+	if Play then
+		main.text = "Auto Heal On"
+		text.visible = true
+		main.visible = true
+		
+		local heal = me:GetAbility(3)
 	
-	if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
-		if me.health/me.maxHealth < HealthSelf then
-			text.text = ""..me.name
-			SoulRingf()
-			me:CastAbility(heal,me)
-			Sleep(1000)
-			return
-		end		
-			
-		local allyhero = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me.team,alive=true,visible=true,illusion=false})
-		table.sort( allyhero, function (a,b) return a.health < b.health end )
-		for i,v in ipairs(allyhero) do
-			if v.health/v.maxHealth < HealthTeam then
-				text.text = ""..v.name:gsub("npc_dota_hero_","")
+		if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
+		
+			if me.health/me.maxHealth < HealthSelf then
+				text.text = ""..me.name
 				SoulRingf()
-				me:CastAbility(heal,v)
+				me:CastAbility(heal,me)
 				Sleep(1000)
 				return
-			end
-		end
+			end		
 			
-		local tower = entityList:GetEntities({classId=CDOTA_BaseNPC_Tower,team = me.team,alive=true,visible=true})
-		table.sort( tower, function (a,b) return a.health < b.health end )
-		for i,v in ipairs(tower) do
-			if v.health/v.maxHealth < HealthTower then
-				text.text = ""..v.name
-				SoulRingf()
-				me:CastAbility(heal,v)
-				Sleep(1000)
-				return
+			local allyhero = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me.team,alive=true,visible=true,illusion=false})
+			table.sort( allyhero, function (a,b) return a.health < b.health end )
+			for i,v in ipairs(allyhero) do
+				if v.health/v.maxHealth < HealthTeam then
+					text.text = ""..v.name:gsub("npc_dota_hero_","")
+					SoulRingf()
+					me:CastAbility(heal,v)
+					Sleep(1000)
+					return
+				end
+			end
+			
+			local tower = entityList:GetEntities({classId=CDOTA_BaseNPC_Tower,team = me.team,alive=true,visible=true})
+			table.sort( tower, function (a,b) return a.health < b.health end )
+			for i,v in ipairs(tower) do
+				if v.health/v.maxHealth < HealthTower then
+					text.text = ""..v.name
+					SoulRingf()
+					me:CastAbility(heal,v)
+					Sleep(1000)
+					return
+				end
 			end
 		end
+	else
+		main.text = "Auto Heal Off"
+		text.visible = false
+		collectgarbage("collect")
 	end
 end
 
@@ -72,7 +83,7 @@ end
 
 function Key()
     if IsKeyDown(toggleKey) and not client.chat then   
-       Play = (not Play)
+       Play = not Play
 	end
 end
 
@@ -83,8 +94,6 @@ function Load()
 			script:Disable() 
 		else
 			Play = true
-			main.visible = true
-			text.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
