@@ -22,7 +22,7 @@ local victimText = drawMgr:CreateText(-50*monitor,1*monitor,-1,"Chasing this guy
 
 function Main(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero()
+	local me = entityList:GetMyHero() if me then Close() end
 	
 	if spaceformove then
 		movetomouse = 0x20
