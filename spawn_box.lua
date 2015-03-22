@@ -8,8 +8,7 @@ config:Load()
 
 showmebox = config.boxs
 
-local check = false
-local play = false
+local Play = false
 
 local spots = {
 --radian
@@ -101,10 +100,10 @@ function GameClose()
 	eff3 = {}
 	eff4 = {}
 	collectgarbage("collect")
-	if play then
+	if Play then
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		play = false
+		Play = false
 	end
 end
 
