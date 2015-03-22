@@ -69,7 +69,7 @@ function Key(msg,code)
 			if code == hotkey7 and not IsKeyDown(16) then
 				local sel = mp.selection[1]
 				local spell = sel:FindItem("item_blink")
-				if sel and sel.name == "npc_dota_hero_meepo" and spell and spell.state == LuaEntityAbility.STATE_READY then
+				if sel and sel.name == "npc_dota_hero_meepo" and spell and spell:CanBeCasted() then
 					poofall(sel,false)
 					if not eff then
 						eff = Effect(sel, "range_display")
@@ -113,7 +113,7 @@ function Key(msg,code)
 					poofall(sel,false)
 					if code == hotkey2 and sel.health/sel.maxHealth >= hpPercent then
 						local spell = sel:GetAbility(2)
-						if spell.state == LuaEntityAbility.STATE_READY then
+						if spell and spell:CanBeCasted() then
 							sel:CastAbility(spell,sel)
 						end
 					end
@@ -124,7 +124,7 @@ function Key(msg,code)
 					poofall(sel,true)
 					if code == hotkey11 then
 						local spell = sel:GetAbility(2)
-						if spell.state == LuaEntityAbility.STATE_READY then
+						if spell and spell:CanBeCasted() then
 							sel:CastAbility(spell,sel)
 						end
 					end
@@ -133,7 +133,7 @@ function Key(msg,code)
 				local sel = mp.selection[1]
 				if sel and sel.name == "npc_dota_hero_meepo" then
 					local spell = sel:GetAbility(2)
-					if spell.state == LuaEntityAbility.STATE_READY then
+					if spell and spell:CanBeCasted() then
 						sel:CastAbility(spell,foun)
 					end
 				end
@@ -173,9 +173,9 @@ function Key(msg,code)
 			local meepos = entityList:FindEntities({ type = LuaEntity.TYPE_MEEPO, alive = true})
 			local throw = true
 			for i,v in ipairs(meepos) do 
-				local spell = v:GetAbility(1)
-				if throw and spell.state == LuaEntityAbility.STATE_READY and GetDistance2D(target.position,v.position) <= spell.castRange then
-					v:CastAbility(spell,Vector(target.position.x+220*math.cos(target.rotR), target.position.y+220*math.sin(target.rotR), target.position.z))
+				local catch = v:GetAbility(1)
+				if throw and catch and catch:CanBeCasted() and GetDistance2D(target.position,v.position) <= catch.castRange then
+					v:CastAbility(catch,Vector(target.position.x+220*math.cos(target.rotR), target.position.y+220*math.sin(target.rotR), target.position.z))
 					v:Attack(target,true)
 					sleep[3] = GetTick() + 1500
 					throw = false
@@ -203,7 +203,7 @@ function poofall(sel,selecti)
 	for i,v in ipairs(meeposs) do
 		if v ~= sel and v.health/v.maxHealth >= hpPercent then
 			local spell = v:GetAbility(2)
-			if spell.state == LuaEntityAbility.STATE_READY and not spell.abilityPhase then
+			if spell and spell:CanBeCasted() and not spell.abilityPhase then
 				v:CastAbility(spell,sel)
 				if not selecti then
 					n = 0
@@ -230,7 +230,7 @@ function Tick(tick)
 		end
 		n = 0
 		spell = seld:GetAbility(1)
-		if spell and spell.state == LuaEntityAbility.STATE_READY then
+		if spell and spell:CanBeCasted() then
 			if nota ~= 0 then
 				seld:CastAbility(spell, nota,true)
 			else
@@ -238,7 +238,7 @@ function Tick(tick)
 			end
 		end
 		spell = seld:GetAbility(2)
-		if spell and spell.state == LuaEntityAbility.STATE_READY then
+		if spell and spell:CanBeCasted() then
 			if nota ~= 0 then
 				seld:CastAbility(spell, nota,true)
 			else
@@ -295,7 +295,7 @@ function Tick(tick)
 					local sel = mp.selection[1]
 					if sel and sel.name == "npc_dota_hero_meepo" then
 						local spell = v:GetAbility(2)
-						if spell.state == LuaEntityAbility.STATE_READY then
+						if spell and spell:CanBeCasted() then
 							v:CastAbility(spell,sel)
 							sleep[4] = tick + 1500
 							n = i
