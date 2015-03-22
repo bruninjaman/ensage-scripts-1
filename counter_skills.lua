@@ -4,8 +4,9 @@ require("libs.HeroInfo")
 local play = false local activated = 0 local wait = 0 local waittime = 0 local sleepTick = nil local sleep1 = 0  local sleepk = 0 local tt = nil local aa = nil
 
 function Tick( tick )
-	if not PlayingGame() or sleepTick and sleepTick > tick then return end
-	me = entityList:GetMyHero() if not me then return end
+    if not PlayingGame() or sleepTick and sleepTick > tick then return end
+    me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 
 	-- Silence Dispell
 	if IsSilenced(me) or me:IsSilenced() then
@@ -849,20 +850,15 @@ function Tick( tick )
 				PLDoppleganger()
 				Useblackking()
 				UseShadowBlade()
-				if v:GetAbility(4).name == "lina_laguna_blade" then
-					local linaultdamage = 0
-					if v:GetAbility(4).level == 1 then
-						linaultdamage = 450*3/4
-					end
-					if v:GetAbility(4).level == 2 then
-						linaultdamage = 675*3/4
-					end
-					if v:GetAbility(4).level == 3 then
-						linaultdamage = 950*3/4
-					end
-					if linaultdamage > me.health then
+				if v:GetAbility(4) and v:GetAbility(4).name == "lina_laguna_blade" then
+					target = v
+					TusksnowballTarget()
+					if v:GetAbility(4):GetDamage(v:GetAbility(4).level) * (1 - me.magicDmgResist) >= me.health then
 						Phoenixsupernova()
+						Abaddonult()
 						UseBloodStone()
+					else
+						sleepTick = GetTick() + 550
 					end
 				end
 				if not v:AghanimState() then
@@ -870,7 +866,7 @@ function Tick( tick )
 					Lifestealerrage()
 				end
 				UseBladeMail()
-				return				
+				return		
 			elseif me:DoesHaveModifier("modifier_pudge_meat_hook") then                                                      
 				if v:GetAbility(1) and v:GetAbility(1).name == "pudge_meat_hook" then
 					target = v
@@ -909,24 +905,19 @@ function Tick( tick )
 				Useblackking()
 				PLDoppleganger()
 				OracleFateEdict()
-				if v:GetAbility(4).name == "lion_finger_of_death" then
-					local sniperultdamage = 0
-					if v:GetAbility(4).level == 1 then
-						lionultdamage = 600*3/4
-					end
-					if v:GetAbility(4).level == 2 then
-						lionultdamage = 725*3/4
-					end
-					if v:GetAbility(4).level == 3 then
-						lionultdamage = 850*3/4
-					end
-					if lionultdamage > me.health then
+				if v:GetAbility(4) and v:GetAbility(4).name == "lion_finger_of_death" then
+					target = v
+					TusksnowballTarget()
+					if v:GetAbility(4):GetDamage(v:GetAbility(4).level) * (1 - me.magicDmgResist) >= me.health then
 						Phoenixsupernova()
+						Abaddonult()
 						UseBloodStone()
+					else
+						sleepTick = GetTick() + 550
 					end
 				end
 				UseBladeMail()
-				return	
+				return
 			elseif me:DoesHaveModifier("modifier_spirit_breaker_charge_of_darkness_vision") then	
 				if v.classId == CDOTA_Unit_Hero_SpiritBreaker then
 					if GetDistance2D(v,me) < 700 then
@@ -3076,7 +3067,6 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			Play = true
 			script:RegisterEvent(EVENT_FRAME,Tick)
 			script:UnregisterEvent(Load)
 		end
