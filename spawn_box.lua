@@ -2,11 +2,11 @@
 require("libs.Utils")
 require("libs.ScriptConfig")
 
-local config = ScriptConfig.new()
-config:SetParameter("Hotkey", "L", config.TYPE_HOTKEY)
+config = ScriptConfig.new()
+config:SetParameter("boxs", true)
 config:Load()
 
-local toggleKey = config.Hotkey
+showmebox = config.boxs
 
 local check = false
 local play = false
@@ -27,43 +27,25 @@ local spots = {
 {-1921,3138,-964,2308}, -- camp by rune
 {-832,4098,-3,3203,183}, -- medium camp
 {447,3778,1659,2822,183} -- hard camp by mid
-
 }
+
 local eff = {}
 local eff1 = {}
 local eff2 = {}
 local eff3 = {}
 local eff4 = {}
 
-local effec = "candle_flame_medium" -- ambient_gizmo_model
-
---[[
-	a----b
-	|	 |
-	|	 |
-	d----c
-	
-	a 2240;-4288
-	c 3776;-5312
-]]
-
-function Key(msg,code)
-
-	if msg ~= KEY_UP or code ~= toggleKey or client.chat or client.console then
-    	return
-    end
-	
-	check = (not check)
-
+function Tick(tick)
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
+    local effec = "candle_flame_medium"
 	for i,k in ipairs(spots) do
-		
-		if not eff[i] then
-			
+		if not eff[i] and showmebox then
 			local coint1 = math.floor(math.floor(k[3]-k[1])/50)
 			local coint2 = math.floor(math.floor(k[2]-k[4])/50)
-			
 			eff[i] = {}		
-			
+
 			for a = 1,math.max(coint1,coint2) do
 				eff[i].eff1 = {} eff[i].eff2 = {}	
 				eff[i].eff3 = {} eff[i].eff4 = {}
@@ -85,15 +67,10 @@ function Key(msg,code)
 				eff[i].eff2[a]:SetVector(0,GetVector(first,k[5]))				
 				eff[i].eff4[a] = Effect(second,effec)
 				eff[i].eff4[a]:SetVector(0,GetVector(second,k[5]))
-			end
-			
-		elseif eff[i] then
-			eff[i] = nil
-			collectgarbage("collect")
+				collectgarbage("collect")
+			end	
 		end
-	
 	end
-	
 end
 
 function GetVector(Vec,zet)
@@ -107,9 +84,13 @@ end
 
 function Load()
 	if PlayingGame() then
-		play = true
-		script:RegisterEvent(EVENT_KEY,Key)
-		script:UnregisterEvent(Load)
+		local me = entityList:GetMyHero()
+		if not me then 
+			script:Disable()
+		else
+			script:RegisterEvent(EVENT_TICK,Tick)
+			script:UnregisterEvent(Load)
+		end
 	end
 end
 
