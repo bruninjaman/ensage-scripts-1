@@ -5,17 +5,18 @@ config = ScriptConfig.new()
 config:SetParameter("detectMirana", true)
 config:Load()
 
-local detect_Mirana = config.detectMirana local registered = nil local isMoonlightCasted = false
+detect_Mirana = config.detectMirana 
 
+local Play = false local isMoonlightCasted = false
 
 function Tick(tick)
-	if not SleepCheck() then return end
-	local me = entityList:GetMyHero() if not me then return end
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	local team = me.team
-
 	-- Get visible cast & heroes --
-	local cast    = entityList:GetEntities({classId=CDOTA_BaseNPC})
-	local heroes  = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
+	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
+	local heroes = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 
 	for i,v in ipairs(heroes) do
 		if v.team ~= team and not v:IsIllusion() then
@@ -54,7 +55,6 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			registered = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -63,11 +63,11 @@ end
 
 function Close()
 	collectgarbage("collect")
-	if registered then
+	if Play then
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
 		collectgarbage("collect")
-		registered = false
+		Play = false
 	end
 end
 
