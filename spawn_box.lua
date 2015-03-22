@@ -101,7 +101,7 @@ function GameClose()
 	eff4 = {}
 	collectgarbage("collect")
 	if Play then
-		script:UnregisterEvent(Key)
+		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
 		Play = false
 	end
