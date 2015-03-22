@@ -217,7 +217,8 @@ end
 
 function Tick(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	if com and tick > sleep[2] then
 		com = false
 		eff = nil
@@ -322,7 +323,6 @@ function Load()
 			script:Disable() 
 		else
 			text.visible = true
-			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:UnregisterEvent(Load)

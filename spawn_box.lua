@@ -38,7 +38,7 @@ function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
     if not Play then return end
-    local effec = "candle_flame_medium"
+    local effec = "origin_gizmo"
 	for i,k in ipairs(spots) do
 		if not eff[i] and showmebox then
 			local coint1 = math.floor(math.floor(k[3]-k[1])/50)

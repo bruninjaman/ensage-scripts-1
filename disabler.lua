@@ -50,7 +50,8 @@ end
  
 function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick then return end
-	me = entityList:GetMyHero() if not me then return end
+    me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	
 	if RightSide then 
 		indent = 1330
@@ -411,7 +412,6 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			Play = true
 			statusText.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
