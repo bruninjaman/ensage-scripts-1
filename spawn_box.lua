@@ -100,7 +100,6 @@ function GameClose()
 	eff2 = {}
 	eff3 = {}
 	eff4 = {}
-	check = false
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Key)
