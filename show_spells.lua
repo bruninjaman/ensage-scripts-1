@@ -74,7 +74,7 @@ effect.SilenceList = {"modifier_skywrath_mage_ancient_seal","modifier_earth_spir
 
 function Main(tick)
 	if not PlayingGame() or not SleepCheck() then return end
-	local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero() if not me then Close() end
 	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	--local projet F= entityList:GetProjectiles({})
@@ -809,7 +809,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Roshan)
@@ -842,4 +842,4 @@ function GameClose()
 end
 
 script:RegisterEvent(EVENT_TICK,Load)
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)

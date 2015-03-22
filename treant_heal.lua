@@ -23,7 +23,7 @@ local text = drawMgr:CreateText(20,65,0x6CF58CFF,"No target",myFont) text.visibl
 function Tick( tick )
 	if not PlayingGame() or not SleepCheck() then return end
 		 
-	local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero() if not me then Close() end
 		
 	if Play then
 	
@@ -102,7 +102,7 @@ function Load()
 	end	
 end
 
-function GameClose()
+function Close()
 	text.visible = false
 	main.visible = false
 	collectgarbage("collect")
@@ -114,5 +114,5 @@ function GameClose()
 	end
 end
  
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

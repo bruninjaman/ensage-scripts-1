@@ -6,7 +6,7 @@ local illusionTable = {}
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 	local illusions = entityList:FindEntities({type=LuaEntity.TYPE_HERO,illusion=true,team = (5-me.team)})	--
 	for _, heroEntity in ipairs(illusions) do
 		if not (heroEntity.type == 9 and heroEntity.meepoIllusion == false) then
@@ -41,7 +41,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	heroTable = {}
 	llusionTable = {}
 	collectgarbage("collect")
@@ -52,5 +52,5 @@ function GameClose()
 	end
 end
  
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

@@ -218,7 +218,7 @@ end
 function Tick(tick)
 	if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 	if com and tick > sleep[2] then
 		com = false
 		eff = nil

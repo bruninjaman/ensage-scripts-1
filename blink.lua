@@ -14,7 +14,7 @@ local rangeEffect = {} local Play = false
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 
     if IsKeyDown(toggleKey) and not client.chat then
         local blink = me:FindItem("item_blink")
@@ -52,7 +52,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
     rangeEffect = {}
     collectgarbage("collect")
 	if play then

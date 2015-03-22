@@ -252,7 +252,7 @@ end
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 	local stop = {}
 	for r,t in ipairs(modifs) do
 		if not stop[t[2]] then

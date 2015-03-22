@@ -12,7 +12,7 @@ local Play = false local isMoonlightCasted = false
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 	local team = me.team
 	-- Get visible cast & heroes --
 	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})

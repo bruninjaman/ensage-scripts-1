@@ -53,7 +53,7 @@ end
 	
 function Tick( tick )
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero() if not me then Close() end
 	if not SleepCheck() then
 		active = false 
 	else
@@ -228,7 +228,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	collectgarbage("collect")
 	if reg then
 		script:UnregisterEvent(Tick)

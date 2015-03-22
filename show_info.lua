@@ -139,7 +139,7 @@ glyph.visible = false
 
 function Tick(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero() if not me then Close() end
 	
 	local cours = entityList:GetEntities({type=LuaEntity.TYPE_COURIER})
 	local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
@@ -607,7 +607,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	eff = {}
 	mana = {}
 	spell = {}
@@ -627,4 +627,4 @@ function GameClose()
 end
 
 script:RegisterEvent(EVENT_TICK,Load)
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)

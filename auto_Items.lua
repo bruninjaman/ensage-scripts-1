@@ -23,7 +23,7 @@ local Play = false
 function Tick(tick)
     if not PlayingGame() or not SleepCheck() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 	
 	local bloodstone = me:FindItem("item_bloodstone")
 	local bottle = me:FindItem("item_bottle")
@@ -82,7 +82,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)
@@ -91,5 +91,5 @@ function GameClose()
 	end
 end
 
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

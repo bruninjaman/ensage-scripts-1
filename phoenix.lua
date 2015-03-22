@@ -7,7 +7,7 @@ local distance = 600 -- min distance for move
 
 function Tick(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero() if not me then Close() end
 	local forward = FindMove(me)
 	
 	if forward ~= nil then
@@ -90,7 +90,7 @@ function Load()
 	end	
 end
 
-function GameClose()
+function Close()
 	Toggle,Toggle_1 = false,false
 	collectgarbage("collect")
 	if play then
@@ -99,5 +99,5 @@ function GameClose()
 	end
 end
 
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

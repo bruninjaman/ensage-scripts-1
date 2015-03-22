@@ -6,7 +6,7 @@ local play = false local activated = 0 local wait = 0 local waittime = 0 local s
 function Tick( tick )
     if not PlayingGame() or sleepTick and sleepTick > tick then return end
     me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
 
 	-- Silence Dispell
 	if IsSilenced(me) or me:IsSilenced() then
@@ -3073,7 +3073,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	target = nil
 	sleepTick = nil
 	tt = nil
@@ -3090,5 +3090,5 @@ function GameClose()
 	end
 end
 
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
 script:RegisterEvent(EVENT_TICK,Load)

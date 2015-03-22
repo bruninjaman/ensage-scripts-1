@@ -37,7 +37,7 @@ local eff4 = {}
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then return end
+    if not Play then Close() end
     local effec = "origin_gizmo"
 	for i,k in ipairs(spots) do
 		if not eff[i] and showmebox then
@@ -93,7 +93,7 @@ function Load()
 	end
 end
 
-function GameClose()
+function Close()
 	eff = {}
 	eff1 = {}
 	eff2 = {}
@@ -108,4 +108,4 @@ function GameClose()
 end
 
 script:RegisterEvent(EVENT_TICK,Load)
-script:RegisterEvent(EVENT_CLOSE,GameClose)
+script:RegisterEvent(EVENT_CLOSE,Close)
