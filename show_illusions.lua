@@ -4,8 +4,9 @@ local heroTable = {}
 local illusionTable = {}   
 
 function Tick(tick)
-	if not PlayingGame() or not SleepCheck() then return end
-	local me = entityList:GetMyHero() if not me then return end
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	local illusions = entityList:FindEntities({type=LuaEntity.TYPE_HERO,illusion=true,team = (5-me.team)})	--
 	for _, heroEntity in ipairs(illusions) do
 		if not (heroEntity.type == 9 and heroEntity.meepoIllusion == false) then
@@ -25,6 +26,7 @@ function Tick(tick)
 		end
 	end
 	Sleep(250)
+	collectgarbage("collect")
 end
 
 function Load()
@@ -33,7 +35,6 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end

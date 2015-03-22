@@ -3,7 +3,8 @@ local play = false
 
 function Tick(tick)
 	if not PlayingGame() or not SleepCheck() then return end
-	local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	local towers = entityList:FindEntities({classId=CDOTA_BaseNPC_Tower,alive=true})
 	local clear = false
 	for i,v in ipairs(towers) do
@@ -26,7 +27,6 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
