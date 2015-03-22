@@ -250,7 +250,9 @@ function Modifadd(v,modif)
 end
 
 function Tick(tick)
-	if not PlayingGame() then return end
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if me then Play = true end
+    if not Play then return end
 	local stop = {}
 	for r,t in ipairs(modifs) do
 		if not stop[t[2]] then
@@ -375,7 +377,6 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_MODIFIER_ADD,Modifadd)
 			script:UnregisterEvent(Load)
