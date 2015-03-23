@@ -17,18 +17,17 @@ HealthTower = config.Tower
 
 local Play = false
 local activated = true
-local myFont = drawMgr:CreateFont("myFont","Tahoma",14,500)
-local statusText1 = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal On",myFont) statusText1.visible = false
-local statusText2 = drawMgr:CreateText(50,45,0x6CF58CFF,"No target",myFont) statusText2.visible = false
+local Font = drawMgr:CreateFont("myFont","Tahoma",14,500)
+local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal: On",Font) statusText.visible = false
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading then return end
+	if client.chat or client.console or client.loading or not Play then return end
 	if IsKeyDown(toggleKey) then
 		activated = not activated
 		if activated then
-			statusText1.text = "Auto Heal: On"
+			statusText.text = "Auto Heal: On"
 		else
-			statusText1.text = "Auto Heal: Off"
+			statusText.text = "Auto Heal: Off"
 		end
 	end
 end
@@ -42,7 +41,7 @@ function Tick( tick )
 
 	if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
 		if me.health/me.maxHealth < HealthSelf then
-			statusText2.text = ""..me.name
+			statusText.text = ""..me.name
 			SoulRingf()
 			me:CastAbility(heal,me)
 			Sleep(1000)
@@ -53,7 +52,7 @@ function Tick( tick )
 		table.sort( allyhero, function (a,b) return a.health < b.health end )
 		for i,v in ipairs(allyhero) do
 			if v.health/v.maxHealth < HealthTeam then
-				statusText2.text = ""..v.name:gsub("npc_dota_hero_","")
+				statusText.text = ""..v.name:gsub("npc_dota_hero_","")
 				SoulRingf()
 				me:CastAbility(heal,v)
 				Sleep(1000)
@@ -65,7 +64,7 @@ function Tick( tick )
 		table.sort( tower, function (a,b) return a.health < b.health end )
 		for i,v in ipairs(tower) do
 			if v.health/v.maxHealth < HealthTower then
-				statusText2.text = ""..v.name
+				statusText.text = ""..v.name
 				SoulRingf()
 				me:CastAbility(heal,v)
 				Sleep(1000)
@@ -91,8 +90,7 @@ function Load()
 			script:Disable() 
 		else
 			Play = true
-			statusText1.visible = true
-			statusText2.visible = true
+			statusText.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
@@ -101,8 +99,7 @@ function Load()
 end
 
 function Close()
-	statusText1.visible = false
-	statusText2.visible = false
+	statusText.visible = false
 	activated = false
 	collectgarbage("collect")
 	if play then
