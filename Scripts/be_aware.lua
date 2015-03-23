@@ -19,10 +19,12 @@ function Tick(tick)
 
 	for i,v in ipairs(heroes) do
 		if v.team ~= team and not v:IsIllusion() then
-			if v.classId == CDOTA_Unit_Hero_Mirana then MoonlightShadow(heroes, team) end
+			if v.classId == CDOTA_Unit_Hero_Mirana then
+				MoonlightShadow(heroes, team)
+				Sleep(1000)
+			end
 		end
 	end
-	Sleep(1000)
 end
 
 function MoonlightShadow(heroes, team)
