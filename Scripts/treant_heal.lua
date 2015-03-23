@@ -2,73 +2,76 @@ require("libs.Utils")
 require("libs.ScriptConfig")
 
 config = ScriptConfig.new()
-config:SetParameter("Active", "T", config.TYPE_HOTKEY)
+config:SetParameter("Hotkey", "T", config.TYPE_HOTKEY)
 config:SetParameter("SoulRing", true)
 config:SetParameter("Self", 0.5)
 config:SetParameter("Team", 0.8)
 config:SetParameter("Tower", 0.3)
 config:Load()
 
-toggleKey = config.Active
+toggleKey = config.Hotkey
 UseSoulRing = config.SoulRing
 HealthSelf = config.Self
 HealthTeam = config.Team
 HealthTower = config.Tower
 
 local Play = false
+local activated = true
 local myFont = drawMgr:CreateFont("myFont","Tahoma",14,500)
-local main = drawMgr:CreateText(20,50,0x6CF58CFF,"Auto Heal On",myFont) main.visible = false
-local text = drawMgr:CreateText(20,65,0x6CF58CFF,"No target",myFont) text.visible = false
+local statusText1 = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal On",myFont) statusText1.visible = false
+local statusText2 = drawMgr:CreateText(50,45,0x6CF58CFF,"No target",myFont) statusText2.visible = false
+
+function Key(msg,code)
+	if client.chat or client.console or client.loading then return end
+	if IsKeyDown(toggleKey) then
+		activated = not activated
+		if activated then
+			statusText1.text = "Auto Heal: On"
+		else
+			statusText1.text = "Auto Heal: Off"
+		end
+	end
+end
 
 function Tick( tick )
-	if not PlayingGame() or not SleepCheck() then return end 
-	local me = entityList:GetMyHero() if not me then Close() end
-		
-	if Play then
-		main.text = "Auto Heal On"
-		text.visible = true
-		main.visible = true
-		
-		local heal = me:GetAbility(3)
-	
-		if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
-		
-			if me.health/me.maxHealth < HealthSelf then
-				text.text = ""..me.name
+	if not PlayingGame() or not SleepCheck() or not Play then return end 
+    local me = entityList:GetMyHero()
+    if not (me and activated) then return end
+
+	local heal = me:GetAbility(3)
+
+	if me.alive and not me:IsChanneling() and heal and heal:CanBeCasted() then
+		if me.health/me.maxHealth < HealthSelf then
+			statusText2.text = ""..me.name
+			SoulRingf()
+			me:CastAbility(heal,me)
+			Sleep(1000)
+			return
+		end		
+			
+		local allyhero = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me.team,alive=true,visible=true,illusion=false})
+		table.sort( allyhero, function (a,b) return a.health < b.health end )
+		for i,v in ipairs(allyhero) do
+			if v.health/v.maxHealth < HealthTeam then
+				statusText2.text = ""..v.name:gsub("npc_dota_hero_","")
 				SoulRingf()
-				me:CastAbility(heal,me)
+				me:CastAbility(heal,v)
 				Sleep(1000)
 				return
-			end		
-			
-			local allyhero = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = me.team,alive=true,visible=true,illusion=false})
-			table.sort( allyhero, function (a,b) return a.health < b.health end )
-			for i,v in ipairs(allyhero) do
-				if v.health/v.maxHealth < HealthTeam then
-					text.text = ""..v.name:gsub("npc_dota_hero_","")
-					SoulRingf()
-					me:CastAbility(heal,v)
-					Sleep(1000)
-					return
-				end
-			end
-			
-			local tower = entityList:GetEntities({classId=CDOTA_BaseNPC_Tower,team = me.team,alive=true,visible=true})
-			table.sort( tower, function (a,b) return a.health < b.health end )
-			for i,v in ipairs(tower) do
-				if v.health/v.maxHealth < HealthTower then
-					text.text = ""..v.name
-					SoulRingf()
-					me:CastAbility(heal,v)
-					Sleep(1000)
-					return
-				end
 			end
 		end
-	else
-		main.text = "Auto Heal Off"
-		text.visible = false
-		collectgarbage("collect")
+			
+		local tower = entityList:GetEntities({classId=CDOTA_BaseNPC_Tower,team = me.team,alive=true,visible=true})
+		table.sort( tower, function (a,b) return a.health < b.health end )
+		for i,v in ipairs(tower) do
+			if v.health/v.maxHealth < HealthTower then
+				statusText2.text = ""..v.name
+				SoulRingf()
+				me:CastAbility(heal,v)
+				Sleep(1000)
+				return
+			end
+		end
 	end
 end
 
@@ -81,12 +84,6 @@ function SoulRingf()
 	end
 end
 
-function Key()
-    if IsKeyDown(toggleKey) and not client.chat then   
-       Play = not Play
-	end
-end
-
 function Load()
 	if PlayingGame() then
 		local me = entityList:GetMyHero()
@@ -94,6 +91,8 @@ function Load()
 			script:Disable() 
 		else
 			Play = true
+			statusText1.visible = true
+			statusText2.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
@@ -102,8 +101,9 @@ function Load()
 end
 
 function Close()
-	text.visible = false
-	main.visible = false
+	statusText1.visible = false
+	statusText2.visible = false
+	activated = false
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)
