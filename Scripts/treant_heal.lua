@@ -16,9 +16,9 @@ HealthTeam = config.Team
 HealthTower = config.Tower
 
 local Play = false
-local activated = true
+local activated = false
 local Font = drawMgr:CreateFont("myFont","Tahoma",14,500)
-local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal: On",Font) statusText.visible = false
+local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal: Off",Font) statusText.visible = false
 
 function Key(msg,code)
 	if client.chat or client.console or client.loading or not Play then return end
@@ -35,7 +35,7 @@ end
 function Tick( tick )
 	if not PlayingGame() or not SleepCheck() or not Play then return end 
     local me = entityList:GetMyHero()
-    if not (me and activated) then return end
+    if not me or not activated then return end
 
 	local heal = me:GetAbility(3)
 
