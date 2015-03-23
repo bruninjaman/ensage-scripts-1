@@ -24,7 +24,7 @@ local treads_changed
 local BugedItems = {"item_ancient_janggo","item_veil_of_discord"}
 
 function Key(msg,code)
-	if not PlayingGame() or not Play or client.chat then return end
+	if client.chat or client.console or client.loading then return end
 	local me = entityList:GetMyHero()
 	local mp = entityList:GetMyPlayer()
 	if msg == KEY_DOWN then

@@ -14,16 +14,14 @@ local rec2 = drawMgr3D:CreateRect(Vector(3000,-2450,0), Vector(0,0,0), Vector2D(
 
 function Key(msg,code)
 	if msg ~= KEY_UP and code == toggleKey and not client.chat then
-		if not play then
-			play = true
+		if not Play then
+			Play = true
 			rec1.visible = true
 			rec2.visible = true
-			return true
 		else
-			play = false
+			Play = false
 			rec1.visible = false
 			rec2.visible = false
-			return true
 		end
 	end
 end
@@ -34,7 +32,7 @@ function Tick(tick)
 	
 	local runes = entityList:GetEntities(function (ent) return ent.classId==CDOTA_Item_Rune and GetDistance2D(ent,me) < 200 end)[1]	
 
-	if play and runes then 
+	if Play and runes then 
 		entityList:GetMyPlayer():Select(me)
 		entityList:GetMyPlayer():TakeRune(runes)	
 	end
@@ -47,7 +45,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			play = true
+			Play = true
 			rec1.visible = true
 			rec2.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
@@ -61,11 +59,11 @@ function Close()
 	collectgarbage("collect")
 	rec1.visible = false
 	rec2.visible = false
-	if play then
+	if Play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		play = false
+		Play = false
 	end
 end
 

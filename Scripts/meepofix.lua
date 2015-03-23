@@ -51,7 +51,7 @@ local ordered = {}
 local sleep = {0, 0, 0, 0}
 
 function Key(msg,code)
-	if not PlayingGame() or client.chat or not Play then return end
+	if client.chat or client.console or client.loading or not Play then return end
 	if msg == KEY_UP and code == hotkey6 then
 		activated = not activated 
 		if activated then
