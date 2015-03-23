@@ -15,13 +15,13 @@ HealthSelf = config.Self
 HealthTeam = config.Team
 HealthTower = config.Tower
 
-local Play = false
+local play = false
 local activated = false
 local Font = drawMgr:CreateFont("myFont","Tahoma",14,500)
 local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal: Off",Font) statusText.visible = false
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading or not Play then return end
+	if client.chat or client.console or client.loading or not play then return end
 	if IsKeyDown(toggleKey) then
 		activated = not activated
 		if activated then
@@ -33,7 +33,7 @@ function Key(msg,code)
 end
 
 function Tick( tick )
-	if not PlayingGame() or not SleepCheck() or not Play then return end 
+	if not PlayingGame() or not SleepCheck() or not play then return end 
     local me = entityList:GetMyHero()
     if not me or not activated then return end
 
@@ -89,7 +89,7 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Treant then 
 			script:Disable() 
 		else
-			Play = true
+			play = true
 			statusText.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
@@ -102,11 +102,11 @@ function Close()
 	statusText.visible = false
 	activated = false
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
  

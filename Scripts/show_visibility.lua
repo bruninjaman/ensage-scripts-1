@@ -20,7 +20,7 @@ Visible_Ward = config.Ward
 local play = false local visibilityEffect = {}
 
 function Tick(tick)
-    if not PlayingGame() and not Play then return end
+    if not PlayingGame() and not play then return end
     local me = entityList:GetMyHero() if not me then return end
     
     if Visible_Self then
@@ -87,7 +87,7 @@ function Load()
         if not me then 
             script:Disable()
         else
-            Play = true
+            play = true
             script:RegisterEvent(EVENT_TICK,Tick)
             script:UnregisterEvent(Load)
         end

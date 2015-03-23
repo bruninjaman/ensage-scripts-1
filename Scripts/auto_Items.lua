@@ -18,10 +18,10 @@ enablePhaseBoots = config.PhaseBoots
 enableMagicStick = config.MagicStick
 enableMidas = config.Midas
 
-local Play = false
+local play = false
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() or not Play then return end
+    if not PlayingGame() or not SleepCheck() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	
 	local bloodstone = me:FindItem("item_bloodstone")
@@ -75,7 +75,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
+			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -87,7 +87,7 @@ function Close()
 	if play then
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

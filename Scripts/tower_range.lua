@@ -1,5 +1,5 @@
 local eff = {}
-local play = false
+local Play = false
 
 function Tick(tick)
     if not PlayingGame() or not Play then return end
@@ -34,11 +34,11 @@ end
 
 function Close()
 	collectgarbage("collect")
-	if play then
+	if Play then
 		eff = {}
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
-		play = false
+		Play = false
 	end
 end
 

@@ -4,7 +4,7 @@ require("libs.HeroInfo")
 local play = false local activated = 0 local wait = 0 local waittime = 0 local sleepTick = nil local sleep1 = 0  local sleepk = 0 local tt = nil local aa = nil
 
 function Tick( tick )
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() or not play then return end
     me = entityList:GetMyHero() if not me then return end
 
 	-- Silence Dispell
@@ -3066,7 +3066,7 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			Play = true
+			play = true
 			script:RegisterEvent(EVENT_FRAME,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -3083,10 +3083,10 @@ function Close()
 	sleep1 = 0 
 	sleepk = 0
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

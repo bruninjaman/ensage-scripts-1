@@ -9,10 +9,10 @@ config:Load()
 toggleKey = config.hotkey
 showmerange = config.range
 
-local rangeEffect = {} local Play = false
+local rangeEffect = {} local play = false
 
 function Tick(tick)
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
     if IsKeyDown(toggleKey) and not client.chat then
         local blink = me:FindItem("item_blink")
@@ -43,7 +43,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-            Play = true
+            play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end

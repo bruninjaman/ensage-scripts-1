@@ -8,7 +8,7 @@ config:Load()
 
 showmebox = config.boxs
 
-local Play = false
+local play = false
 
 local spots = {
 --radian
@@ -35,7 +35,7 @@ local eff3 = {}
 local eff4 = {}
 
 function Tick(tick)
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
     local effec = "origin_gizmo"
 	for i,k in ipairs(spots) do
@@ -86,7 +86,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
+			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -100,10 +100,10 @@ function Close()
 	eff3 = {}
 	eff4 = {}
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

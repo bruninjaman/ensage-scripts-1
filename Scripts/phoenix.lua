@@ -1,18 +1,18 @@
 require("libs.Utils")
 
-local Play,Toggle,Toggle_1 = false,false,false
+local play,Toggle,Toggle_1 = false,false,false
 
 local angle = 30 -- if the angle between the target and the hero is more then 30* phoenix stopsю
 local distance = 600 -- min distance for move
 
 function Tick(tick)
-	if not PlayingGame() or not Play then return end
+	if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	local forward = FindMove(me)
 	
 	if forward ~= nil then
 		if me:DoesHaveModifier("modifier_phoenix_sun_ray") then
-			Play = true
+			play = true
 			local target = nil		
 			if test then
 				target = entityList:GetEntity(test.handle)
@@ -32,8 +32,8 @@ function Tick(tick)
 					me:Follow(target)
 				end
 			end
-		elseif Play then
-			Play,toggle,toggle_1 = false,false,false
+		elseif play then
+			play,toggle,toggle_1 = false,false,false
 		end
 		
 	end
@@ -41,9 +41,9 @@ function Tick(tick)
 end
 
 function Key(msg)
-	if msg == RBUTTON_DOWN and Play then		
+	if msg == RBUTTON_DOWN and play then		
 		test = entityList:GetMouseover()
-	elseif not Play then
+	elseif not play then
 		test = nil
 	end
 end
@@ -81,7 +81,7 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Phoenix then 
 			script:Disable() 
 		else
-			Play = true
+			play = true
 			victim = nil
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
@@ -95,7 +95,7 @@ function Close()
 	collectgarbage("collect")
 	if play then
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

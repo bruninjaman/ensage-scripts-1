@@ -15,14 +15,14 @@ toggleKey = config.Active
 RightSide = config.RightSide
 indent = 255
 
-local active = false local Play  = false local activated = 0 local hero = {} local icon = {} local sleepTick = nil
+local active = false local play  = false local activated = 0 local hero = {} local icon = {} local sleepTick = nil
 
 local monitor = client.screenSize.x/1600
 local F11 = drawMgr:CreateFont("F11","Tahoma",11*monitor,550*monitor) 
 local statusText = drawMgr:CreateText(278*monitor,42*monitor,0xFF3399FF,"(" .. string.char(toggleKey) .. ") Disabler: Blink",F11) statusText.visible = false
  
 function Key(msg,code)
-	if IsKeyDown(toggleKey) and Play and not client.chat then
+	if IsKeyDown(toggleKey) and play and not client.chat then
 		active = not active
 		if active then
 			statusText.text = "(" .. string.char(toggleKey) .. ") Disabler: All"
@@ -49,7 +49,7 @@ function IsMouseOnButton(x,y,h,w)
 end
  
 function Tick( tick )
-	if not PlayingGame() or not Play or sleepTick and sleepTick > tick then return end
+	if not PlayingGame() or not play or sleepTick and sleepTick > tick then return end
     me = entityList:GetMyHero() if not me then return end
 	
 	if RightSide then 
@@ -411,7 +411,7 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			Play = true
+			play = true
 			statusText.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
@@ -425,11 +425,11 @@ function Close()
 	hero = {}
 	icon = {}
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

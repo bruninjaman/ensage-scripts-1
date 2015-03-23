@@ -14,7 +14,7 @@ local toggleKey = config.Hotkey
 local dropblink = config.DropBlink
 local droptranquils = config.DropTranquils
 
-local Play = false
+local play = false
 local active = false
 local activated = false
 local disableAutoAttack = false
@@ -52,7 +52,7 @@ function Key(msg,code)
 end
 	
 function Tick( tick )
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	if not SleepCheck() then
 		active = false 
@@ -220,7 +220,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
+			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:UnregisterEvent(Load)
@@ -230,11 +230,11 @@ end
 
 function Close()
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end 
  

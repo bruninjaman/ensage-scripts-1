@@ -7,10 +7,10 @@ config:Load()
 
 detect_Mirana = config.detectMirana 
 
-local Play = false local isMoonlightCasted = false
+local play = false local isMoonlightCasted = false
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() or not Play then return end
+    if not PlayingGame() or not SleepCheck() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	local team = me.team
 	-- Get visible cast & heroes --
@@ -57,7 +57,7 @@ function Load()
 		if not me then
 			script:Disable()
 		else
-			Play = true
+			play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -66,11 +66,11 @@ end
 
 function Close()
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
 		collectgarbage("collect")
-		Play = false
+		play = false
 	end
 end
 

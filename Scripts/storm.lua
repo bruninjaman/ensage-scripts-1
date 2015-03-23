@@ -14,14 +14,14 @@ spaceformove = config.Spaceformove
 
 sleep = 0
 
-local Play = false local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
+local play = false local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
 
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
 local victimText = drawMgr:CreateText(-50*monitor,1*monitor,-1,"Chasing this guy!",F14) victimText.visible = false
 
 function Main(tick)
-	if not PlayingGame() or not Play then return end
+	if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	
 	if spaceformove then
@@ -162,7 +162,7 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_StormSpirit then 
 			script:Disable() 
 		else
-			Play = true
+			play = true
 			victim = nil
 			start = false
 			sleep = 0 
@@ -177,10 +177,10 @@ function Close()
 	victim = nil
 	start = false
 	resettime = nil
-	if Play then
+	if play then
 		script:UnregisterEvent(Main)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

@@ -19,7 +19,7 @@ distance = config.Distancefontimage -- Distance between font and image. All para
 verticaldistance = config.Verticaldistance -- Distance between two different modifiers.
 height = -1*config.Antiheight -- Height of modifiers (may be positive and negative).
 
-local Play = false local timers = {} local entities = {} local wisp = {} local sleeptick = 0 local modifs = {}
+local play = false local timers = {} local entities = {} local wisp = {} local sleeptick = 0 local modifs = {}
 
 local font = drawMgr:CreateFont("timersfont","Arial",fontsize,500)
 local wispTime = drawMgr:CreateText(0,0,-1,"",font) wispTime.visible = false
@@ -251,8 +251,8 @@ end
 
 function Tick(tick)
     if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+    local me = entityList:GetMyHero() if me then play = true end
+    if not play then Close() end
 	local stop = {}
 	for r,t in ipairs(modifs) do
 		if not stop[t[2]] then
@@ -391,7 +391,7 @@ function Close()
 	sleeptick = 0
 	modifs = {}
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Modifadd)
 		script:RegisterEvent(EVENT_TICK,Load)

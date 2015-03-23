@@ -7,19 +7,19 @@ config:Load()
 
 toggleKey = config.Hotkey
 
-local Play = false
+local play = false
 
 local rec1 = drawMgr3D:CreateRect(Vector(-2272,1792,0), Vector(0,0,0), Vector2D(0,0), Vector2D(30,30), 0x000000ff, drawMgr:GetTextureId("NyanUI/other/fav_heart"))
 local rec2 = drawMgr3D:CreateRect(Vector(3000,-2450,0), Vector(0,0,0), Vector2D(0,0), Vector2D(30,30), 0x000000ff, drawMgr:GetTextureId("NyanUI/other/fav_heart"))
 
 function Key(msg,code)
 	if msg ~= KEY_UP and code == toggleKey and not client.chat then
-		if not Play then
-			Play = true
+		if not play then
+			play = true
 			rec1.visible = true
 			rec2.visible = true
 		else
-			Play = false
+			play = false
 			rec1.visible = false
 			rec2.visible = false
 		end
@@ -32,7 +32,7 @@ function Tick(tick)
 	
 	local runes = entityList:GetEntities(function (ent) return ent.classId==CDOTA_Item_Rune and GetDistance2D(ent,me) < 200 end)[1]	
 
-	if Play and runes then 
+	if play and runes then 
 		entityList:GetMyPlayer():Select(me)
 		entityList:GetMyPlayer():TakeRune(runes)	
 	end
@@ -45,7 +45,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			Play = true
+			play = true
 			rec1.visible = true
 			rec2.visible = true
 			script:RegisterEvent(EVENT_KEY,Key)
@@ -59,11 +59,11 @@ function Close()
 	collectgarbage("collect")
 	rec1.visible = false
 	rec2.visible = false
-	if Play then
+	if play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

@@ -42,7 +42,7 @@ hotkey11 = config.poofseltofirstsel -- poof selected meepo's to first selected m
 -- Code
 local font = drawMgr:CreateFont("meepofont","Tahoma",14,500)
 local text = drawMgr:CreateText(x,y,0x6CF58CFF,"Meepo script: NOT ACTIVE",font) text.visible = false
-local Play = false
+local play = false
 local activated = false
 local fount = {false,false,false,false,false}
 local com = false
@@ -51,7 +51,7 @@ local ordered = {}
 local sleep = {0, 0, 0, 0}
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading or not Play then return end
+	if client.chat or client.console or client.loading or not play then return end
 	if msg == KEY_UP and code == hotkey6 then
 		activated = not activated 
 		if activated then
@@ -216,9 +216,9 @@ function poofall(sel,selecti)
 end
 
 function Tick(tick)
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
-    if not Play then Close() end
+    if not play then Close() end
 	if com and tick > sleep[2] then
 		com = false
 		eff = nil
@@ -322,7 +322,7 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Meepo then 
 			script:Disable() 
 		else
-			Play = true
+			play = true
 			text.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
@@ -339,11 +339,11 @@ function Close()
 	ordered = {}
 	meeponumb = {}
 	collectgarbage("collect")
-	if Play then
+	if play then
 		script:UnregisterEvent(Key)
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
-		Play = false
+		play = false
 	end
 end
 

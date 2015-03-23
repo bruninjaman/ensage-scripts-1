@@ -45,7 +45,7 @@ local icon = drawMgr:CreateRect(xx,yy,24,24,0x000000ff) icon.visible = false
 local dmgCalc = drawMgr:CreateText(xx*shft, yy-18*shft, 0x00000099,"Dmg",F14) dmgCalc.visible = false
 
 function Tick(tick)
-	if not SleepCheck() and not Play then return end	
+	if not SleepCheck() and not play then return end	
 	local me = entityList:GetMyHero() if not me then return end
 	local ID = me.classId if ID ~= myhero then Close() end
 
