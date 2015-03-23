@@ -10,7 +10,7 @@ detect_Mirana = config.detectMirana
 local Play = false local isMoonlightCasted = false
 
 function Tick(tick)
-    if not PlayingGame() or not Play or not SleepCheck() then return end
+    if not PlayingGame() or not SleepCheck() or not Play then return end
     local me = entityList:GetMyHero() if not me then return end
 	local team = me.team
 	-- Get visible cast & heroes --
@@ -22,7 +22,7 @@ function Tick(tick)
 			if v.classId == CDOTA_Unit_Hero_Mirana then MoonlightShadow(heroes, team) end
 		end
 	end
-	sleep(250)
+	Sleep(1000)
 end
 
 function MoonlightShadow(heroes, team)
