@@ -15,19 +15,19 @@ toggleKey = config.Active
 RightSide = config.RightSide
 indent = 255
 
-local active = false local play  = false local activated = 0 local hero = {} local icon = {} local sleepTick = nil
+local active = false local play = false local activated = 0 local hero = {} local icon = {} local sleepTick = nil
 
 local monitor = client.screenSize.x/1600
 local F11 = drawMgr:CreateFont("F11","Tahoma",11*monitor,550*monitor) 
-local statusText = drawMgr:CreateText(278*monitor,42*monitor,0xFF3399FF,"(" .. string.char(toggleKey) .. ") Disabler: Blink",F11) statusText.visible = false
+local statusText = drawMgr:CreateText(290*monitor,42*monitor,0xFF3399FF,"Disabler: Blink",F11) statusText.visible = false
  
 function Key(msg,code)
 	if IsKeyDown(toggleKey) and play and not client.chat then
 		active = not active
 		if active then
-			statusText.text = "(" .. string.char(toggleKey) .. ") Disabler: All"
+			statusText.text = "Disabler: All"
 		else
-			statusText.text = "(" .. string.char(toggleKey) .. ") Disabler: Blink"
+			statusText.text = "Disabler: Blink"
 		end
 	end
 	

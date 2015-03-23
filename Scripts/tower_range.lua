@@ -33,9 +33,9 @@ function Load()
 end
 
 function Close()
+	eff = {}
 	collectgarbage("collect")
 	if Play then
-		eff = {}
 		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
 		Play = false

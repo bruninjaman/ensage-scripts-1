@@ -20,12 +20,9 @@ local cullingblade = drawMgr:CreateRect(-45,-70,20,20,0x000000ff) cullingblade.v
 local blink = drawMgr:CreateRect(-25,-70,35,20,0x000000ff) blink.visible = false
 
 function Tick(tick)
-	
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero()	
-	if not me then return end
-	local ID = me.classId
-	if ID ~= myhero then Close() end
+	local me = entityList:GetMyHero() if not me then return end
+	local ID = me.classId if ID ~= myhero then Close() end
 
 	cullingblade.entity = me 
 	cullingblade.entityPosition = Vector(0,0,me.healthbarOffset)
@@ -61,13 +58,13 @@ function Tick(tick)
 			for i,v in ipairs(enemies) do
 				if v.healthbarOffset ~= -1 and not v:IsIllusion() then
 					if not hero[v.handle] then
-						hero[v.handle] = drawMgr:CreateText(-45,-55, 0xFFFFFF99, "",F14) hero[v.handle].visible = false hero[v.handle].entity = v hero[v.handle].entityPosition = Vector(0,0,v.healthbarOffset)
+						hero[v.handle] = drawMgr:CreateText(-45,-55, 0xFFCC00FF, "",F14) hero[v.handle].visible = false hero[v.handle].entity = v hero[v.handle].entityPosition = Vector(0,0,v.healthbarOffset)
 					end
 					if v.visible and v.alive and v.health > 0 then
 						hero[v.handle].visible = active
 						local culldamage = math.floor(v:DamageTaken(Dmg,Type,me))
 						local healthtokill = math.floor(v.health - culldamage + CastPoint*v.healthRegen+Moprhling(v,CastPoint))
-						hero[v.handle].text = "Health to kill: "..healthtokill
+						hero[v.handle].text = "Kill On: "..healthtokill
 						if active then
 							if healthtokill <= 0 then
 								if SleepCheck("blink") and GetDistance2D(me,v) <= RangeB+150 and GetDistance2D(me,v) > Range and (Blink and Blink.state == -1) and Cullblade:CanBeCasted() then

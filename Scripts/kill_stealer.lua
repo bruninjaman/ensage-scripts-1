@@ -39,7 +39,7 @@ local activ = true local draw = true local myhero = nil local dmgg = nil local m
 
 --Draw function
 local shft = client.screenSize.x/1600
-local F14 = drawMgr:CreateFont("F14","Calibri",14*shft,500*shft)
+local F14 = drawMgr:CreateFont("F14","Tahoma",14*shft,500*shft)
 local rect = drawMgr:CreateRect(xx-1,yy-1,26,26,0x00000090,true) rect.visible = false
 local icon = drawMgr:CreateRect(xx,yy,24,24,0x000000ff) icon.visible = false
 local dmgCalc = drawMgr:CreateText(xx*shft, yy-18*shft, 0x00000099,"Dmg",F14) dmgCalc.visible = false
@@ -67,9 +67,7 @@ function Tick(tick)
 
 	--Kill(false,linkin block,me,ability,damage,scepter damage,range,target(1-target,2-target.position,3-non target),classId,damage type)
 	if ID == CDOTA_Unit_Hero_Abaddon then
-		Kill(true,me,1,{100, 150, 200, 250},nil,nil,1)
-	elseif ID == CDOTA_Unit_Hero_Axe then		
-		dmgg = KillAxe(me,{250,325,400},{300,425,550})		
+		Kill(true,me,1,{100, 150, 200, 250},nil,nil,1)	
 	elseif ID == CDOTA_Unit_Hero_Bane then
 		Kill(true,me,2,{90, 160, 230, 300},nil,nil,1)
 	elseif ID == CDOTA_Unit_Hero_BountyHunter then
@@ -455,45 +453,6 @@ function KillPrediction(me,ability,damage,cast,project)
 			end
 		end
 	end	
-end
-
-function KillAxe(me,damage,adamage)
-	local Spell = me:GetAbility(4)
-	icon.textureId = drawMgr:GetTextureId("NyanUI/spellicons/"..Spell.name)
-	if Spell.level > 0 then
-		local Dmg = GetDmg(Spell.level,me,damage,adamage)
-		local CastPoint = Spell:FindCastPoint() + client.latency/1000
-		local Channel = me:IsChanneling()
-		local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO,team = 5-me.team})
-		for i,v in ipairs(enemies) do
-			if v.healthbarOffset ~= -1 and not v:IsIllusion() then
-				local hand = v.handle
-				if not hero[hand] then
-					hero[hand] = drawMgr:CreateText(20*shft,-45*shft, 0xFFFFFF99, "",F14) hero[hand].visible = false hero[hand].entity = v hero[hand].entityPosition = Vector(0,0,v.healthbarOffset)
-				end
-				if v.visible and v.alive and v.health > 0 then
-					hero[hand].visible = draw
-					local DmgF = math.floor(v.health - Dmg + CastPoint*v.healthRegen+MorphMustDie(v,CastPoint))
-					hero[hand].text = " "..DmgF
-					hero[hand].color = GetColor(DmgF)
-					if activ and not Channel then
-						if DmgF < 0 and GetDistance2D(me,v) < 400 then
-							if me:IsMagicDmgImmune() or (NotDieFromSpell(Spell.manacost,v,me) and not v:DoesHaveModifier("modifier_nyx_assassin_spiked_carapace") and NotDieFromBM(v,me,Dmg)) then							
-								if Spell and Spell:CanBeCasted() and me:CanCast() and not v:IsLinkensProtected() then
-									local prev = SelectUnit(me)
-									entityList:GetMyPlayer():UseAbility(Spell,v)
-									SelectBack(prev)
-									return Dmg
-								end								
-							end
-						end
-					end
-				elseif hero[hand].visible then
-					hero[hand].visible = false
-				end
-			end
-		end
-	end
 end
 
 function KillMines(me,ability,damage,adamage,comp,id)
