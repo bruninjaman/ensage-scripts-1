@@ -102,7 +102,7 @@ function Close()
 	statusText.visible = false
 	activated = false
 	collectgarbage("collect")
-	if play then
+	if Play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
