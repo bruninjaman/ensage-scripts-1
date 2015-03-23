@@ -21,9 +21,8 @@ enableMidas = config.Midas
 local Play = false
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+    if not PlayingGame() or not SleepCheck() or not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
 	
 	local bloodstone = me:FindItem("item_bloodstone")
 	local bottle = me:FindItem("item_bottle")
@@ -76,6 +75,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
+			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end

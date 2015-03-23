@@ -138,8 +138,8 @@ local glyph = drawMgr:CreateText(client.screenSize.x/tglyphX,client.screenSize.y
 glyph.visible = false
 
 function Tick(tick)
-	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then Close() end
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if not me then return end
 	
 	local cours = entityList:GetEntities({type=LuaEntity.TYPE_COURIER})
 	local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO})

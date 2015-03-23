@@ -216,8 +216,8 @@ function poofall(sel,selecti)
 end
 
 function Tick(tick)
-	if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
+    if not PlayingGame() or not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
     if not Play then Close() end
 	if com and tick > sleep[2] then
 		com = false
@@ -322,6 +322,7 @@ function Load()
 		if me.classId ~= CDOTA_Unit_Hero_Meepo then 
 			script:Disable() 
 		else
+			Play = true
 			text.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)

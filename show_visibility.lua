@@ -20,9 +20,8 @@ Visible_Ward = config.Ward
 local play = false local visibilityEffect = {}
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+    if not PlayingGame() and not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
     
     if Visible_Self then
         drawEffect(me, "aura_shivas")
@@ -88,6 +87,7 @@ function Load()
         if not me then 
             script:Disable()
         else
+            Play = true
             script:RegisterEvent(EVENT_TICK,Tick)
             script:UnregisterEvent(Load)
         end
@@ -105,5 +105,5 @@ function Close()
 end
 
 
-script:RegisterEvent(EVENT_TICK,Tick)
 script:RegisterEvent(EVENT_CLOSE,Close)
+script:RegisterEvent(EVENT_TICK,Load)

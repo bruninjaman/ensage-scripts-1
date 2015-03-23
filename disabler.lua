@@ -22,7 +22,7 @@ local F11 = drawMgr:CreateFont("F11","Tahoma",11*monitor,550*monitor)
 local statusText = drawMgr:CreateText(278*monitor,42*monitor,0xFF3399FF,"(" .. string.char(toggleKey) .. ") Disabler: Blink",F11) statusText.visible = false
  
 function Key(msg,code)
-	if IsKeyDown(toggleKey) and not client.chat then
+	if IsKeyDown(toggleKey) and Play and not client.chat then
 		active = not active
 		if active then
 			statusText.text = "(" .. string.char(toggleKey) .. ") Disabler: All"
@@ -49,9 +49,8 @@ function IsMouseOnButton(x,y,h,w)
 end
  
 function Tick( tick )
-	if not PlayingGame() or sleepTick and sleepTick > tick then return end
-    me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+	if not PlayingGame() or not Play or sleepTick and sleepTick > tick then return end
+    me = entityList:GetMyHero() if not me then return end
 	
 	if RightSide then 
 		indent = 1330
@@ -412,6 +411,7 @@ function Load()
 		if not me then
 			script:Disable()
 		else
+			Play = true
 			statusText.visible = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)

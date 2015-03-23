@@ -35,9 +35,8 @@ local eff3 = {}
 local eff4 = {}
 
 function Tick(tick)
-    if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+    if not PlayingGame() or not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
     local effec = "origin_gizmo"
 	for i,k in ipairs(spots) do
 		if not eff[i] and showmebox then
@@ -87,6 +86,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
+			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end

@@ -73,8 +73,8 @@ effect.SilenceList = {"modifier_skywrath_mage_ancient_seal","modifier_earth_spir
 "modifier_silence","modifier_silencer_last_word_disarm","modifier_silencer_global_silence","modifier_doom_bringer_doom","modifier_legion_commander_duel"}
 
 function Main(tick)
-	if not PlayingGame() or not SleepCheck() then return end
-	local me = entityList:GetMyHero() if not me then Close() end
+    if not PlayingGame() then return end
+    local me = entityList:GetMyHero() if not me then return end
 	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	--local projet F= entityList:GetProjectiles({})

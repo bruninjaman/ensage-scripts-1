@@ -14,7 +14,7 @@ local toggleKey = config.Hotkey
 local dropblink = config.DropBlink
 local droptranquils = config.DropTranquils
 
-local reg = false
+local Play = false
 local active = false
 local activated = false
 local disableAutoAttack = false
@@ -24,7 +24,7 @@ local treads_changed
 local BugedItems = {"item_ancient_janggo","item_veil_of_discord"}
 
 function Key(msg,code)
-	if not PlayingGame() or client.chat then return end
+	if not PlayingGame() or not Play or client.chat then return end
 	local me = entityList:GetMyHero()
 	local mp = entityList:GetMyPlayer()
 	if msg == KEY_DOWN then
@@ -52,8 +52,8 @@ function Key(msg,code)
 end
 	
 function Tick( tick )
-	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then Close() end
+    if not PlayingGame() or not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
 	if not SleepCheck() then
 		active = false 
 	else
@@ -220,7 +220,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			reg = true
+			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:UnregisterEvent(Load)
@@ -230,11 +230,11 @@ end
 
 function Close()
 	collectgarbage("collect")
-	if reg then
+	if Play then
 		script:UnregisterEvent(Tick)
 		script:UnregisterEvent(Key)
 		script:RegisterEvent(EVENT_TICK,Load)
-		reg = false
+		Play = false
 	end
 end 
  

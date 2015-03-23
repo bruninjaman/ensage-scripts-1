@@ -10,9 +10,8 @@ detect_Mirana = config.detectMirana
 local Play = false local isMoonlightCasted = false
 
 function Tick(tick)
-    if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if me then Play = true end
-    if not Play then Close() end
+    if not PlayingGame() or not Play then return end
+    local me = entityList:GetMyHero() if not me then return end
 	local team = me.team
 	-- Get visible cast & heroes --
 	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
@@ -55,6 +54,7 @@ function Load()
 		if not me then
 			script:Disable()
 		else
+			Play = true
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
