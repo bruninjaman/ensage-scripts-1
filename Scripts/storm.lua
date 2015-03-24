@@ -5,30 +5,21 @@ require("libs.Animations")
 require("libs.Skillshot")
 
 local config = ScriptConfig.new()
-config:SetParameter("CustomMove", "J", config.TYPE_HOTKEY)
-config:SetParameter("Spaceformove", true)
+config:SetParameter("Hotkey", "32", config.TYPE_HOTKEY)
 config:Load()
 	
-custommove = config.CustomMove
-spaceformove = config.Spaceformove
-
+toggleKey = config.Hotkey
 sleep = 0
 
 local play = false local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
 
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
-local victimText = drawMgr:CreateText(-50*monitor,1*monitor,-1,"Chasing this guy!",F14) victimText.visible = false
+local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Chasing this guy!",F14) victimText.visible = false
 
 function Main(tick)
 	if not PlayingGame() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
-	
-	if spaceformove then
-		movetomouse = 0x20
-	else
-		movetomouse = custommove
-	end
  	
 	if victim and victim.visible then 
 		if not victimText.visible then
@@ -42,7 +33,7 @@ function Main(tick)
 	
 	local attackRange = me.attackRange	
 
-	if IsKeyDown(movetomouse) and not client.chat then	
+	if IsKeyDown(toggleKey) and not client.chat then	
 		if Animations.CanMove(me) or not start or (victim and GetDistance2D(victim,me) > attackRange+50) then
 			start = true
 			local lowestHP = targetFind:GetLowestEHP(3000, phys)
@@ -74,6 +65,7 @@ function Main(tick)
 					local Overload = me:DoesHaveModifier("modifier_storm_spirit_overload")
 					local Orchid = me:FindItem("item_orchid")
 					local Shivas = me:FindItem("item_shivas_guard")
+					local Sphere = me:FindItem("item_sphere")
 					local distance = GetDistance2D(victim,me)
 					local orchided = victim:DoesHaveModifier("modifier_item_orchid")
 					local disabled = victim:DoesHaveModifier("modifier_sheepstick_debuff") or victim:DoesHaveModifier("modifier_lion_voodoo_restoration") or victim:DoesHaveModifier("modifier_shadow_shaman_voodoo_restoration") or victim:IsStunned()
@@ -88,8 +80,12 @@ function Main(tick)
 							Sleep(CP*1000+me:GetTurnTime(victim)*1000, "casting")
 						end
 					end
-					if Shivas and Shivas:CanBeCasted() and not disabled then
+					if Shivas and Shivas:CanBeCasted() then
 						me:CastAbility(Shivas)
+						Sleep(me:GetTurnTime(victim)*1000, "casting")
+					end
+					if Sphere and Sphere:CanBeCasted() then
+						me:CastAbility(Sphere,me)
 						Sleep(me:GetTurnTime(victim)*1000, "casting")
 					end
 					if Orchid and Orchid:CanBeCasted() and me:CanCast() and not orchided then
