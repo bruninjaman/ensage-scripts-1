@@ -1,11 +1,4 @@
 require("libs.Utils")
-require("libs.ScriptConfig")
-
-config = ScriptConfig.new()
-config:SetParameter("detectMirana", true)
-config:Load()
-
-detect_Mirana = config.detectMirana 
 
 local play = false local isMoonlightCasted = false
 
