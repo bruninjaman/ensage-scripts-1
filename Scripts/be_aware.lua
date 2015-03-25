@@ -10,7 +10,7 @@ function Tick(tick)
 		if v.team ~= team and not v:IsIllusion() then
 			if v.classId == CDOTA_Unit_Hero_Mirana then
 				MoonlightShadow(hero,team)
-				Sleep(1000)
+				Sleep(1700)
 			end
 		end
 	end
