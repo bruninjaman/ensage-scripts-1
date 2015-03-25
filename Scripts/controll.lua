@@ -4,7 +4,7 @@ require("libs.TargetFind")
 
 config = ScriptConfig.new()
 config:SetParameter("Hotkey", "32", config.TYPE_HOTKEY)
-config:SetParameter("Stack", "L", config.TYPE_HOTKEY)
+config:SetParameter("stack", "L", config.TYPE_HOTKEY)
 config:Load()
 
 activated_button = config.Hotkey
@@ -169,7 +169,7 @@ function Tick( tick )
 				for i,v in ipairs(pe) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v:GetAbility(4):CanBeCasted() and distance <= 400 then
+						if v:GetAbility(4):CanBeCasted() and distance <= 350 then
 							v:CastAbility(v:GetAbility(4))
 						end
 						if v:GetAbility(1):CanBeCasted() and distance <= 800 then
@@ -251,16 +251,13 @@ function Key(msg,code)
 		if param == 1 then
 			creepHandle = selection[1].handle
 			SaveCreep = selection[1]
+			local name = client:Localize(selection[1].name)
 			if eff[creepHandle] == nil and effecttocreep then
 				eff[creepHandle] = Effect(selection[1],"aura_assault")
-				eff[creepHandle]:SetVector(1,Vector(0,0,0))
-			end
-			if client.language == "russian" then
-				statusText.text = "Stack Creep: "..client:Localize(names[selection[1].name].Name)
-			else	
+				eff[creepHandle]:SetVector(1,Vector(0,0,0))	
 				statusText.text = "Stack Creep: "..client:Localize(selection[1].name)
 			end
-			local name = client:Localize(selection[1].name)
+		
 			statusText.visible = true
 			param = 2
 		end
