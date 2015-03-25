@@ -1,3 +1,4 @@
+Key Codes
 Value	Description
 1		Left mouse button
 2		Right mouse button
