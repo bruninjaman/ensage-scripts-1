@@ -2,17 +2,11 @@ require("libs.ScriptConfig")
 require("libs.Utils")
 require("libs.TargetFind")
 require("libs.stackpos")
-require("libs.creeps")
 
 config = ScriptConfig.new()
 config:SetParameter("activate", "32", config.TYPE_HOTKEY)
 config:SetParameter("stackcamp", "L", config.TYPE_HOTKEY)
-config:SetParameter("Xcord", 50)
-config:SetParameter("Ycord", 30)
 config:Load()
-
-x = config.Xcord
-y = config.Ycord
 
 hotkey1 = config.activate
 hotkey2 = config.stackcamp
@@ -27,10 +21,7 @@ local mode=3 -- MODE 1/2/3
 
 function Key(msg,code)
 	if client.chat or client.console or client.loading or not play then return end
-	if code == hotkey1 then
-		activated = (msg == KEY_DOWN)
-	end
-
+	if code == hotkey1 then activated = (msg == KEY_DOWN) end
 	if msg == KEY_UP then
 		if code == hotkey2 then
 			local mp = entityList:GetMyPlayer()
@@ -41,7 +32,8 @@ function Key(msg,code)
 					for n,m in ipairs(routes) do 
 						local rang = GetDistance2D(creep.position,m[1])
 						local empty = true
-						for o,p in ipairs(creeps) do
+						local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
+						for o,p in ipairs(nc) do
 							if eff[p.creepHandle] and eff[p.creepHandle] == n then
 								empty = false
 							end
