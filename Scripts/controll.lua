@@ -170,7 +170,7 @@ function Tick( tick )
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
 						if v:GetAbility(4):CanBeCasted() and distance <= 400 then
-							v:CastAbility(v:GetAbility(4),target)
+							v:CastAbility(v:GetAbility(4))
 						end
 						if v:GetAbility(1):CanBeCasted() and distance <= 800 then
 							v:CastAbility(v:GetAbility(1),target)
@@ -187,7 +187,7 @@ function Tick( tick )
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
 						if v:GetAbility(1):CanBeCasted() and distance <= 500 then
-							v:CastAbility(v:GetAbility(1),target)
+							v:CastAbility(v:GetAbility(1),target.position)
 						end
 						if v:GetAbility(4):CanBeCasted() and distance <= 850 then
 							v:CastAbility(v:GetAbility(4),target)
