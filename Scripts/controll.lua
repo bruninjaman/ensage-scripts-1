@@ -12,6 +12,7 @@ no_stack_creep_button = config.stack
 
 local eff = {}
 local activated = false
+local play = false
 local creepHandle = nil
 local SaveCreep = nil
 local param = 1
@@ -21,7 +22,7 @@ local mode=3 -- MODE 1/2/3
 local effecttocreep = true -- Effect for Creep.
 
 function Tick( tick )
-	if not PlayingGame() or sleepTick and sleepTick > tick then return end
+	if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
 	local me = entityList:GetMyHero() if not me then return end
 	local target = nil
 	local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
@@ -168,11 +169,11 @@ function Tick( tick )
 				for i,v in ipairs(pe) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if distance <= 400 then
-							v:SafeCastAbility(v:GetAbility(4),target)
+						if v:GetAbility(4):CanBeCasted() and distance <= 400 then
+							v:CastAbility(v:GetAbility(4),target)
 						end
-						if distance <= 800 then
-							v:SafeCastAbility(v:GetAbility(1),target)
+						if v:GetAbility(1):CanBeCasted() and distance <= 800 then
+							v:CastAbility(v:GetAbility(1),target)
 						end
 						if distance <= 1300 then
 							v:Attack(target)
@@ -185,11 +186,11 @@ function Tick( tick )
 				for i,v in ipairs(ps) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if distance <= 500 then
-							v:SafeCastAbility(v:GetAbility(1),target)
+						if v:GetAbility(1):CanBeCasted() and distance <= 500 then
+							v:CastAbility(v:GetAbility(1),target)
 						end
-						if distance <= 850 then
-							v:SafeCastAbility(v:GetAbility(4),target)
+						if v:GetAbility(4):CanBeCasted() and distance <= 850 then
+							v:CastAbility(v:GetAbility(4),target)
 						end
 						if distance <= 1300 then
 							v:Attack(target)
@@ -275,7 +276,7 @@ function Load()
 		if not me then 
 			script:Disable()
 		else
-			registered = true
+			play = true
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
