@@ -1,11 +1,10 @@
 require("libs.Utils")
+require("libs.SideMessage")
 
 local play = false local isMoonlightCasted = false
 
 function Tick(tick)
     if not PlayingGame() or not SleepCheck() or not play then return end
-    local me = entityList:GetMyHero() if not me then return end
-	local team = me.team
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	for i,v in ipairs(hero) do
 		if v.team ~= team and not v:IsIllusion() then
