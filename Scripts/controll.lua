@@ -69,20 +69,20 @@ function Tick( tick )
 							local distance = GetDistance2D(v,target)
 							if distance <= 1300 then
 								if v.name == "npc_dota_neutral_centaur_khan" then
-									if distance < 250 and not (CheckStun or CheckSetka) then
-										v:SafeCastAbility(v:GetAbility(1),nil)
+									if v:GetAbility(1):CanBeCasted() and distance < 250 and not (CheckStun or CheckSetka) then
+										v:CastAbility(v:GetAbility(1),nil)
 									end
 								elseif v.name == "npc_dota_neutral_satyr_hellcaller" then
-									if distance < 980 then
-										v:SafeCastAbility(v:GetAbility(1),target.position)
+									if v:GetAbility(1):CanBeCasted() and distance < 980 then
+										v:CastAbility(v:GetAbility(1),target.position)
 									end						
 								elseif v.name == "npc_dota_neutral_polar_furbolg_ursa_warrior" then
-									if distance < 300 then
-										v:SafeCastAbility(v:GetAbility(1),nil)
+									if v:GetAbility(1):CanBeCasted() and distance < 300 then
+										v:CastAbility(v:GetAbility(1),nil)
 									end							
 								elseif v.name == "npc_dota_neutral_dark_troll_warlord" then
-									if distance < 550 and not (CheckStun or CheckSetka) then
-										v:SafeCastAbility(v:GetAbility(1),target)
+									if v:GetAbility(1):CanBeCasted() and distance < 550 and not (CheckStun or CheckSetka) then
+										v:CastAbility(v:GetAbility(1),target)
 									end							
 								end
 								if distance <= 1300 then
@@ -143,8 +143,8 @@ function Tick( tick )
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
 						if v.name == "npc_dota_necronomicon_archer_1" or v.name == "npc_dota_necronomicon_archer_2" or v.name == "npc_dota_necronomicon_archer_3" then
-							if distance < 600 then
-								v:SafeCastAbility(v:GetAbility(1),target)
+							if v:GetAbility(1):CanBeCasted() and distance <= 600 then
+								v:CastAbility(v:GetAbility(1),target)
 							end				
 						end
 						if distance <= 1300 then
@@ -217,11 +217,8 @@ function Tick( tick )
 end
 
 function Key(msg,code)
-	if client.chat then return end
-
-    if code == activated_button then
-        activated = (msg == KEY_DOWN)
-	end
+	if client.chat and not play then return end
+    if code == activated_button then activated = (msg == KEY_DOWN) end
 		
 	if code == no_stack_creep_button and msg == KEY_UP then
 		local player = entityList:GetMyPlayer()
