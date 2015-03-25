@@ -6,23 +6,20 @@ function Tick(tick)
     if not PlayingGame() or not SleepCheck() or not play then return end
     local me = entityList:GetMyHero() if not me then return end
 	local team = me.team
-	-- Get visible cast & heroes --
-	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
-	local heroes = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
-
-	for i,v in ipairs(heroes) do
+	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
+	for i,v in ipairs(hero) do
 		if v.team ~= team and not v:IsIllusion() then
 			if v.classId == CDOTA_Unit_Hero_Mirana then
-				MoonlightShadow(heroes, team)
+				MoonlightShadow(hero,team)
 				Sleep(1000)
 			end
 		end
 	end
 end
 
-function MoonlightShadow(heroes, team)
+function MoonlightShadow(hero,team)
 	local target = nil
-	for i,v in ipairs(heroes) do
+	for i,v in ipairs(hero) do
 		if v.team ~= team and v.visible and v.alive then
 			if isMoonlightCasted and not v:DoesHaveModifier("modifier_mirana_moonlight_shadow") then
 				isMoonlightCasted = not isMoonlightCasted
