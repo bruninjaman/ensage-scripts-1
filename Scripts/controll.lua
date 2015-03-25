@@ -14,12 +14,12 @@ local eff = {}
 local activated = false
 local play = false
 local creepHandle = nil
-local SaveCreep = nil
-local param = 1
-local font = drawMgr:CreateFont("No Stack","Tahoma",14,500)
-local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"",font)
 local mode=3 -- MODE 1/2/3
-local effecttocreep = true -- Effect for Creep.
+
+function Key(msg,code)
+	if client.chat and not play then return end
+    if code == activated_button then activated = (msg == KEY_DOWN) end
+end
 
 function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
@@ -36,16 +36,9 @@ function Tick( tick )
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
 
-	if creepHandle ~= nil and effecttocreep then
-		if not SaveCreep.alive then
-			if eff[creepHandle] ~= nil then
-				eff[creepHandle] = nil
-				creepHandle = nil
-				SaveCreep = nil
-				statusText.visible = false
-				collectgarbage("collect")
-			end
-		end
+	if eff[creepHandle] ~= nil then
+		creepHandle = nil
+		collectgarbage("collect")
 	end
 	
 	if mode == 1 then
@@ -169,7 +162,7 @@ function Tick( tick )
 				for i,v in ipairs(pe) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v:GetAbility(4):CanBeCasted() and distance <= 350 then
+						if v:GetAbility(4):CanBeCasted() and distance <= 340 then
 							v:CastAbility(v:GetAbility(4))
 						end
 						if v:GetAbility(1):CanBeCasted() and distance <= 800 then
@@ -216,54 +209,6 @@ function Tick( tick )
 	return
 end
 
-function Key(msg,code)
-	if client.chat and not play then return end
-    if code == activated_button then activated = (msg == KEY_DOWN) end
-		
-	if code == no_stack_creep_button and msg == KEY_UP then
-		local player = entityList:GetMyPlayer()
-		if not player or player.team == LuaEntity.TEAM_NONE then
-			return
-		end
-		
-		local effectDeleted = false
-		
-		if param == 2 then
-			if eff[creepHandle] ~= nil and effecttocreep then
-				eff[creepHandle] = nil
-				effectDeleted = true
-			end
-			SaveCreep = nil
-			creepHandle = nil
-			statusText.visible = false
-			param = 1
-		end
-		
-		if effectDeleted then
-			collectgarbage("collect")
-		end
-
-		local selection = player.selection
-		if #selection ~= 1 or (selection[1].type ~= LuaEntity.TYPE_CREEP and selection[1].type ~= LuaEntity.TYPE_NPC) or selection[1].classId ~= CDOTA_BaseNPC_Creep_Neutral or not selection[1].alive or not selection[1].controllable then
-			return
-		end
-
-		if param == 1 then
-			creepHandle = selection[1].handle
-			SaveCreep = selection[1]
-			local name = client:Localize(selection[1].name)
-			if eff[creepHandle] == nil and effecttocreep then
-				eff[creepHandle] = Effect(selection[1],"aura_assault")
-				eff[creepHandle]:SetVector(1,Vector(0,0,0))	
-				statusText.text = "Stack Creep: "..client:Localize(selection[1].name)
-			end
-		
-			statusText.visible = true
-			param = 2
-		end
-	end
-end
-
 function Load()
 	if PlayingGame() then
 		local me = entityList:GetMyHero()
@@ -282,8 +227,6 @@ function Close()
 	eff = {}
 	activated = false
 	creepHandle = nil
-	SaveCreep = nil
-	param = 1
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Key)
