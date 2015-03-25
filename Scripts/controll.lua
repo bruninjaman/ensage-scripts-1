@@ -4,11 +4,9 @@ require("libs.TargetFind")
 
 config = ScriptConfig.new()
 config:SetParameter("Hotkey", "32", config.TYPE_HOTKEY)
-config:SetParameter("stack", "L", config.TYPE_HOTKEY)
 config:Load()
 
 activated_button = config.Hotkey
-no_stack_creep_button = config.stack
 
 local eff = {}
 local activated = false
