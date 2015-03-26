@@ -57,14 +57,13 @@ function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick then return end
 	local target = nil
 	local me = entityList:GetMyHero()
-	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_Unit_SpiritBear or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)
+	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_Unit_Broodmother_Spiderling or v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_Unit_SpiritBear or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)
 	local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
 	local cc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep,controllable=true,alive=true,visible=true})
 	local ii = entityList:FindEntities({classId=TYPE_HERO,controllable=true,alive=true,visible=true,illusion=true})
 	local pe = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalEarth,controllable=true,alive=true,team=me.team})
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
-	local bs = entityList:GetEntities({classId=CDOTA_Unit_Broodmother_Spiderling,controllable=true,alive=true,team=me.team})
 	local vf = entityList:FindEntities({classId=CDOTA_Unit_VisageFamiliar,controllable=true,alive=true,team=me.team})
 
 	if eff[creepHandle] ~= nil then
@@ -201,22 +200,11 @@ function Tick( tick )
 				end
 			end
 
-			if #bs > 0 then
-				for i,v in ipairs(bs) do
-					if v.controllable and v.unitState ~= -1031241196 then
-						local distance = GetDistance2D(v,target)
-						if distance <= 1300 then
-							v:Attack(target)
-						end
-					end
-				end
-			end
-
 			if #vf > 0 then
 				for i,v in ipairs(vf) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v:GetAbility(1):CanBeCasted() and distance <= 120 then
+						if v:GetAbility(1):CanBeCasted() and distance <= 110 then
 							v:CastAbility(v:GetAbility(1))
 						end
 						if v.health/v.maxHealth < 0.25 and v:GetAbility(1):CanBeCasted() then
