@@ -960,11 +960,16 @@ end
 
 function Load()
 	if PlayingGame() then
-		play = true
-		myhero = me.classId
-		script:RegisterEvent(EVENT_TICK,Tick)
-		script:RegisterEvent(EVENT_KEY,Key)
-		script:UnregisterEvent(Load)
+		local me = entityList:GetMyHero()
+		if KillStealer(me) then 
+			script:Disable() 
+		else
+			play = true
+			myhero = me.classId
+			script:RegisterEvent(EVENT_TICK,Tick)
+			script:RegisterEvent(EVENT_KEY,Key)
+			script:UnregisterEvent(Load)
+		end
 	end
 end
 
