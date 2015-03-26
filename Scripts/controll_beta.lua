@@ -67,6 +67,7 @@ function Tick( tick )
 	local pe = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalEarth,controllable=true,alive=true,team=me.team})
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
+	local bs = entityList:GetEntities({classId=CDOTA_Unit_Broodmother_Spiderling,controllable=true,alive=true,team=me.team})
 
 	if eff[creepHandle] ~= nil then
 		creepHandle = nil
@@ -234,7 +235,19 @@ function Tick( tick )
 						end
 					end
 				end
-			end	
+			end
+
+			if #bs > 0 then
+				for i,v in ipairs(bs) do
+					if v.controllable and v.unitState ~= -1031241196 then
+						local distance = GetDistance2D(v,target)
+						if distance <= 1300 then
+							v:Attack(target)
+						end
+					end
+				end
+			end
+
 		end
 		sleepTick = tick + 333
 		return
