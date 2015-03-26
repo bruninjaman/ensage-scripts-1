@@ -53,7 +53,7 @@ end
 	
 function Tick( tick )
     if not PlayingGame() or not play then return end
-    local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero()
 	if not SleepCheck() then
 		active = false 
 	else
@@ -216,15 +216,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:RegisterEvent(EVENT_KEY,Key)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:RegisterEvent(EVENT_KEY,Key)
+		script:UnregisterEvent(Load)
 	end
 end
 

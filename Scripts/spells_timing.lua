@@ -372,15 +372,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:RegisterEvent(EVENT_MODIFIER_ADD,Modifadd)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:RegisterEvent(EVENT_MODIFIER_ADD,Modifadd)
+		script:UnregisterEvent(Load)
 	end
 end
 

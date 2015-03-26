@@ -139,7 +139,7 @@ glyph.visible = false
 
 function Tick(tick)
     if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero()
 	
 	local cours = entityList:GetEntities({type=LuaEntity.TYPE_COURIER})
 	local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
@@ -595,15 +595,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			count = GetCount()
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		count = GetCount()
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:UnregisterEvent(Load)
 	end
 end
 

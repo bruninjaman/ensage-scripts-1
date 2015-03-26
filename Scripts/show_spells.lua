@@ -74,7 +74,7 @@ effect.SilenceList = {"modifier_skywrath_mage_ancient_seal","modifier_earth_spir
 
 function Main(tick)
     if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero()
 	local cast = entityList:GetEntities({classId=CDOTA_BaseNPC})
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	--local projet F= entityList:GetProjectiles({})
@@ -797,15 +797,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true		
-			script:RegisterEvent(EVENT_TICK,Main)
-			script:RegisterEvent(EVENT_DOTA,Roshan)
-			script:UnregisterEvent(Load)
-		end
+		play = true		
+		script:RegisterEvent(EVENT_TICK,Main)
+		script:RegisterEvent(EVENT_DOTA,Roshan)
+		script:UnregisterEvent(Load)
 	end
 end
 

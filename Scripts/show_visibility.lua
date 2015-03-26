@@ -21,7 +21,7 @@ local play = false local visibilityEffect = {}
 
 function Tick(tick)
     if not PlayingGame() and not play then return end
-    local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero()
     
     if Visible_Self then
         drawEffect(me, "aura_shivas")
@@ -82,15 +82,10 @@ function drawEffect(object, effectName)
 end
 
 function Load()
-    if PlayingGame() then
-        local me = entityList:GetMyHero()
-        if not me then 
-            script:Disable()
-        else
-            play = true
-            script:RegisterEvent(EVENT_TICK,Tick)
-            script:UnregisterEvent(Load)
-        end
+	if PlayingGame() then
+		play = true
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:UnregisterEvent(Load)
     end
 end
 

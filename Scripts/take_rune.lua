@@ -28,10 +28,8 @@ end
 
 function Tick(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() if not me then return end
-	
+	local me = entityList:GetMyHero()
 	local runes = entityList:GetEntities(function (ent) return ent.classId==CDOTA_Item_Rune and GetDistance2D(ent,me) < 200 end)[1]	
-
 	if play and runes then 
 		entityList:GetMyPlayer():Select(me)
 		entityList:GetMyPlayer():TakeRune(runes)	
@@ -41,17 +39,12 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			rec1.visible = true
-			rec2.visible = true
-			script:RegisterEvent(EVENT_KEY,Key)
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		rec1.visible = true
+		rec2.visible = true
+		script:RegisterEvent(EVENT_KEY,Key)
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:UnregisterEvent(Load)
 	end
 end
 

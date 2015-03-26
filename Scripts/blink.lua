@@ -13,7 +13,7 @@ local rangeEffect = {} local play = false
 
 function Tick(tick)
     if not PlayingGame() or not play then return end
-    local me = entityList:GetMyHero() if not me then return end
+    local me = entityList:GetMyHero()
     if IsKeyDown(toggleKey) and not client.chat then
         local blink = me:FindItem("item_blink")
         local distance = math.sqrt(math.pow(client.mousePosition.x - me.position.x, 2) + math.pow(client.mousePosition.y - me.position.y, 2))
@@ -39,14 +39,9 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-            play = true
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:UnregisterEvent(Load)
-		end
+        play = true
+		script:RegisterEvent(EVENT_TICK,Tick)
+        script:UnregisterEvent(Load)
 	end
 end
 

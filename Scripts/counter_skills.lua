@@ -5,7 +5,7 @@ local play = false local activated = 0 local wait = 0 local waittime = 0 local s
 
 function Tick( tick )
     if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
-    me = entityList:GetMyHero() if not me then return end
+    me = entityList:GetMyHero()
 
 	-- Silence Dispell
 	if IsSilenced(me) or me:IsSilenced() then
@@ -3062,14 +3062,9 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then
-			script:Disable()
-		else
-			play = true
-			script:RegisterEvent(EVENT_FRAME,Tick)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		script:RegisterEvent(EVENT_FRAME,Tick)
+		script:UnregisterEvent(Load)
 	end
 end
 

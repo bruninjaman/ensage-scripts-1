@@ -21,8 +21,8 @@ end
 
 function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
-	local me = entityList:GetMyHero() if not me then return end
 	local target = nil
+	local me = entityList:GetMyHero()
 	local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
 	local fs = entityList:FindEntities({classId=CDOTA_BaseNPC_Invoker_Forged_Spirit,controllable=true,alive=true,visible=true})
 	local wg = entityList:FindEntities({classId=CDOTA_BaseNPC_Warlock_Golem,controllable=true,alive=true,visible=true})
@@ -209,15 +209,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			script:RegisterEvent(EVENT_KEY,Key)
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		script:RegisterEvent(EVENT_KEY,Key)
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:UnregisterEvent(Load)
 	end
 end
 
