@@ -6,10 +6,12 @@ require("libs.stackpos")
 config = ScriptConfig.new()
 config:SetParameter("activate", "32", config.TYPE_HOTKEY)
 config:SetParameter("stackcamp", "L", config.TYPE_HOTKEY)
+config:SetParameter("bearkey", "E", config.TYPE_HOTKEY)
 config:Load()
 
 hotkey1 = config.activate
 hotkey2 = config.stackcamp
+hotkey3 = config.bearkey
 
 local eff = {}
 local ordered = {}
@@ -57,7 +59,7 @@ function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick then return end
 	local target = nil
 	local me = entityList:GetMyHero()
-	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_Unit_Broodmother_Spiderling or v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_Unit_SpiritBear or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)
+	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_Unit_Broodmother_Spiderling or v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)
 	local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
 	local cc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep,controllable=true,alive=true,visible=true})
 	local ii = entityList:FindEntities({classId=TYPE_HERO,controllable=true,alive=true,visible=true,illusion=true})
@@ -65,6 +67,7 @@ function Tick( tick )
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
 	local vf = entityList:FindEntities({classId=CDOTA_Unit_VisageFamiliar,controllable=true,alive=true,team=me.team})
+	local sb = entityList:FindEntities({classId=CDOTA_Unit_SpiritBear,controllable=true,alive=true,visible=true})
 
 	if eff[creepHandle] ~= nil then
 		creepHandle = nil
@@ -209,6 +212,32 @@ function Tick( tick )
 						end
 						if v.health/v.maxHealth < 0.25 and v:GetAbility(1):CanBeCasted() then
 							v:CastAbility(v:GetAbility(1))
+						end
+						if distance <= 1300 then
+							v:Attack(target)
+						end
+					end
+				end
+			end
+
+			if #sb > 0 then
+				for i,v in ipairs(sb) do
+					if v.controllable and v.unitState ~= -1031241196 then
+						local distance = GetDistance2D(v,target)
+						local ab = v:FindItem("item_abyssal_blade")
+						local mj = v:FindItem("item_mjollnir")
+						local pb = v:FindItem("item_phase_boots")
+						if IsKeyDown(hotkey3) and v:GetAbility(1):CanBeCasted() then
+							v:CastAbility(v:GetAbility(1))
+						end
+						if pb and pb:CanBeCasted() then
+							v:CastAbility(pb)
+						end
+						if mj and mj:CanBeCasted() then
+							v:CastAbility(mj,v)
+						end
+						if ab and ab:CanBeCasted() and distance <= 140 then
+							v:CastAbility(ab,target)
 						end
 						if distance <= 1300 then
 							v:Attack(target)
