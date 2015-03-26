@@ -275,7 +275,7 @@ end
 function Close()
 	eff = {}
 	activated = false
-	local stack = false
+	stack = false
 	creepHandle = nil
 	collectgarbage("collect")
 	if play then
