@@ -55,15 +55,12 @@ end
 
 function Tick( tick )
 	if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
-	local me = entityList:GetMyHero() if not me then return end
 	local target = nil
+	local me = entityList:GetMyHero()
+	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_Unit_SpiritBear or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)
 	local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
-	local fs = entityList:FindEntities({classId=CDOTA_BaseNPC_Invoker_Forged_Spirit,controllable=true,alive=true,visible=true})
-	local wg = entityList:FindEntities({classId=CDOTA_BaseNPC_Warlock_Golem,controllable=true,alive=true,visible=true})
-	local ts = entityList:FindEntities({classId=CDOTA_BaseNPC_Tusk_Sigil,controllable=true,alive=true,visible=true})
 	local cc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep,controllable=true,alive=true,visible=true})
 	local ii = entityList:FindEntities({classId=TYPE_HERO,controllable=true,alive=true,visible=true,illusion=true})
-	local db = entityList:FindEntities({classId=CDOTA_Unit_SpiritBear,controllable=true,alive=true,visible=true})
 	local pe = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalEarth,controllable=true,alive=true,team=me.team})
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
@@ -72,7 +69,6 @@ function Tick( tick )
 
 	if eff[creepHandle] ~= nil then
 		creepHandle = nil
-		collectgarbage("collect")
 	end
 	
 	if mode == 1 then
@@ -122,41 +118,8 @@ function Tick( tick )
 				end
 			end
 		
-			if #fs > 0 then
-				for i,v in ipairs(fs) do
-					if v.controllable and v.unitState ~= -1031241196 then
-						local distance = GetDistance2D(v,target)
-						if distance <= 1300 then
-							v:Attack(target)
-						end
-					end
-				end
-			end
-
-			if #wg > 0 then
-				for i,v in ipairs(wg) do
-					if v.controllable and v.unitState ~= -1031241196 then
-						local distance = GetDistance2D(v,target)
-						if distance <= 1300 then
-							v:Attack(target)
-						end
-					end
-				end
-			end
-			
-			if #ts > 0 then
-				for i,v in ipairs(ts) do
-					if v.controllable and v.unitState ~= -1031241196 then
-						local distance = GetDistance2D(v,target)
-						if distance <= 1300 then
-							v:Follow(target)
-						end
-					end
-				end
-			end
-			
-			if #db > 0 then
-				for i,v in ipairs(db) do
+			if #zz > 0 then
+				for i,v in ipairs(zz) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
 						if distance <= 1300 then
@@ -170,7 +133,7 @@ function Tick( tick )
 				for i,v in ipairs(cc) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v.name == "npc_dota_necronomicon_archer_1" or v.name == "npc_dota_necronomicon_archer_2" or v.name == "npc_dota_necronomicon_archer_3" then
+						if v.name:sub(1,28) == "npc_dota_necronomicon_archer" then
 							if v:GetAbility(1):CanBeCasted() and distance <= 600 then
 								v:CastAbility(v:GetAbility(1),target)
 							end				
@@ -291,15 +254,10 @@ end
 
 function Load()
 	if PlayingGame() then
-		local me = entityList:GetMyHero()
-		if not me then 
-			script:Disable()
-		else
-			play = true
-			script:RegisterEvent(EVENT_KEY,Key)
-			script:RegisterEvent(EVENT_TICK,Tick)
-			script:UnregisterEvent(Load)
-		end
+		play = true
+		script:RegisterEvent(EVENT_KEY,Key)
+		script:RegisterEvent(EVENT_TICK,Tick)
+		script:UnregisterEvent(Load)
 	end
 end
 
