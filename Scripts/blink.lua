@@ -12,7 +12,7 @@ showmerange = config.range
 local rangeEffect = {} local play = false
 
 function Tick(tick)
-    if not PlayingGame() or not play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero()
     if IsKeyDown(toggleKey) and not client.chat then
         local blink = me:FindItem("item_blink")

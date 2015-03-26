@@ -2,7 +2,7 @@ local eff = {}
 local Play = false
 
 function Tick(tick)
-    if not PlayingGame() or not Play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero()
 	local towers = entityList:FindEntities({classId=CDOTA_BaseNPC_Tower,alive=true})
 	local clear = false

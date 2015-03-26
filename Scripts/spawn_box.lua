@@ -35,7 +35,7 @@ local eff3 = {}
 local eff4 = {}
 
 function Tick(tick)
-    if not PlayingGame() or not play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero()
     local effec = "origin_gizmo"
 	for i,k in ipairs(spots) do

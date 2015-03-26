@@ -18,7 +18,7 @@ local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor)
 local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Chasing this guy!",F14) victimText.visible = false
 
 function Main(tick)
-	if not PlayingGame() or not play then return end
+	if not PlayingGame() then return end
     local me = entityList:GetMyHero() if not me then return end
  	
 	if victim and victim.visible then 

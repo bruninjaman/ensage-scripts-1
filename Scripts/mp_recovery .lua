@@ -52,7 +52,7 @@ function Key(msg,code)
 end
 	
 function Tick( tick )
-    if not PlayingGame() or not play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero()
 	if not SleepCheck() then
 		active = false 

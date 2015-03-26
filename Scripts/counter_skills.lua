@@ -4,7 +4,7 @@ require("libs.HeroInfo")
 local play = false local activated = 0 local wait = 0 local waittime = 0 local sleepTick = nil local sleep1 = 0  local sleepk = 0 local tt = nil local aa = nil
 
 function Tick( tick )
-    if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
+    if not PlayingGame() or sleepTick and sleepTick > tick then return end
     me = entityList:GetMyHero()
 
 	-- Silence Dispell

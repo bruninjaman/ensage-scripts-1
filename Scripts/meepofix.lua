@@ -51,7 +51,7 @@ local ordered = {}
 local sleep = {0, 0, 0, 0}
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading or not play then return end
+	if client.chat or client.console or client.loading then return end
 	if msg == KEY_UP and code == hotkey6 then
 		activated = not activated 
 		if activated then
@@ -216,7 +216,7 @@ function poofall(sel,selecti)
 end
 
 function Tick(tick)
-    if not PlayingGame() or not play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero() if not me then return end
 	if com and tick > sleep[2] then
 		com = false

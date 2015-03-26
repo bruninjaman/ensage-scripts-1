@@ -20,7 +20,7 @@ local creepHandle = nil
 local mode=3 -- MODE 1/2/3
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading or not play then return end
+	if client.chat or client.console or client.loading then return end
 	if code == hotkey1 then activated = (msg == KEY_DOWN) end
 	if msg == KEY_UP then
 		if code == hotkey2 then
@@ -54,7 +54,7 @@ function Key(msg,code)
 end
 
 function Tick( tick )
-	if not PlayingGame() or sleepTick and sleepTick > tick or not play then return end
+	if not PlayingGame() or sleepTick and sleepTick > tick then return end
 	local target = nil
 	local me = entityList:GetMyHero()
 	local zz = entityList:FindEntities(function (v) return (v.classId==CDOTA_BaseNPC_Invoker_Forged_Spirit or v.classId==CDOTA_Unit_SpiritBear or v.classId==CDOTA_BaseNPC_Warlock_Golem or v.classId==CDOTA_BaseNPC_Tusk_Sigil) and v.controllable and v.alive and v.visible end)

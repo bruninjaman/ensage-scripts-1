@@ -21,7 +21,7 @@ enableMidas = config.Midas
 local play = false
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() or not play then return end
+    if not PlayingGame() or not SleepCheck() then return end
     local me = entityList:GetMyHero()
 	local bloodstone = me:FindItem("item_bloodstone")
 	local bottle = me:FindItem("item_bottle")

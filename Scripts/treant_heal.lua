@@ -21,7 +21,7 @@ local Font = drawMgr:CreateFont("myFont","Tahoma",14,500)
 local statusText = drawMgr:CreateText(50,30,0x6CF58CFF,"Auto Heal: Off",Font) statusText.visible = false
 
 function Key(msg,code)
-	if client.chat or client.console or client.loading or not play then return end
+	if client.chat or client.console or client.loading then return end
 	if IsKeyDown(toggleKey) then
 		activated = not activated
 		if activated then
@@ -33,7 +33,7 @@ function Key(msg,code)
 end
 
 function Tick( tick )
-	if not PlayingGame() or not SleepCheck() or not play then return end 
+	if not PlayingGame() or not SleepCheck() then return end 
     local me = entityList:GetMyHero()
     if not me or not activated then return end
 

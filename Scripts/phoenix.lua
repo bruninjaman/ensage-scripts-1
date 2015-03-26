@@ -6,7 +6,7 @@ local angle = 30 -- if the angle between the target and the hero is more then 30
 local distance = 600 -- min distance for move
 
 function Tick(tick)
-	if not PlayingGame() or not play then return end
+	if not PlayingGame() then return end
     local me = entityList:GetMyHero() if not me then return end
 	local forward = FindMove(me)
 	

@@ -4,7 +4,7 @@ local heroTable = {}
 local illusionTable = {}   
 
 function Tick(tick)
-    if not PlayingGame() or not play then return end
+    if not PlayingGame() then return end
     local me = entityList:GetMyHero()
 	local illusions = entityList:FindEntities({type=LuaEntity.TYPE_HERO,illusion=true,team = (5-me.team)})	--
 	for _, heroEntity in ipairs(illusions) do
