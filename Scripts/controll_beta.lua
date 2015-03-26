@@ -68,6 +68,7 @@ function Tick( tick )
 	local ps = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalStorm,controllable=true,alive=true,team=me.team})
 	local pf = entityList:GetEntities({classId=CDOTA_Unit_Brewmaster_PrimalFire,controllable=true,alive=true,team=me.team})
 	local bs = entityList:GetEntities({classId=CDOTA_Unit_Broodmother_Spiderling,controllable=true,alive=true,team=me.team})
+	local vf = entityList:FindEntities({classId=CDOTA_Unit_VisageFamiliar,controllable=true,alive=true,team=me.team})
 
 	if eff[creepHandle] ~= nil then
 		creepHandle = nil
@@ -241,6 +242,23 @@ function Tick( tick )
 				for i,v in ipairs(bs) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
+						if distance <= 1300 then
+							v:Attack(target)
+						end
+					end
+				end
+			end
+
+			if #vf > 0 then
+				for i,v in ipairs(vf) do
+					if v.controllable and v.unitState ~= -1031241196 then
+						local distance = GetDistance2D(v,target)
+						if v:GetAbility(1):CanBeCasted() and distance <= 120 then
+							v:CastAbility(v:GetAbility(1))
+						end
+						if v.health/v.maxHealth < 0.25 and v:GetAbility(1):CanBeCasted() then
+							v:CastAbility(v:GetAbility(1))
+						end
 						if distance <= 1300 then
 							v:Attack(target)
 						end
