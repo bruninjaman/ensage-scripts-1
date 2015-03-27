@@ -233,7 +233,7 @@ function Tick( tick )
 						if pb and pb:CanBeCasted() then
 							v:CastAbility(pb)
 						end
-						if mj and mj:CanBeCasted() then
+						if mj and mj:CanBeCasted() and distance <= 525 then
 							v:CastAbility(mj,v)
 						end
 						if ab and ab:CanBeCasted() and distance <= 140 then
