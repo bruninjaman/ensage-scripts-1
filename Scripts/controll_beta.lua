@@ -247,10 +247,7 @@ function Tick( tick )
 			end
 
 		end
-		sleepTick = tick + 333
-		return
 	end
-
 	if stack then
 		for i,v in ipairs(nc) do
 			if eff[v.handle] and eff[v.handle] ~= 0 and not ordered[v.handle] and isPosEqual(v.position,routes[eff[v.handle]][3],100) and math.floor(client.gameTime%60) == math.floor(52.48-540/v.movespeed) then
@@ -263,6 +260,8 @@ function Tick( tick )
 			end
 		end
 	end
+	sleepTick = tick + 500
+	return
 end
 
 function isPosEqual(v1, v2, d)
