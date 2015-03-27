@@ -31,10 +31,10 @@ function Key(msg,code)
 			if not eff[creep.handle] or eff[creep.handle] == 0 then
 				if creep then
 					local range = 100000
+					local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
 					for n,m in ipairs(routes) do 
 						local rang = GetDistance2D(creep.position,m[1])
 						local empty = true
-						local nc = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=true,alive=true,visible=true})
 						for o,p in ipairs(nc) do
 							if eff[p.creepHandle] and eff[p.creepHandle] == n then
 								empty = false
@@ -87,15 +87,14 @@ function Tick( tick )
 	if target and activated then
 		if target.team == (5-me.team) then
 			if #nc > 0 then
-			CheckStun = target:DoesHaveModifier("modifier_centaur_hoof_stomp")
-			CheckSetka = target:DoesHaveModifier("modifier_dark_troll_warlord_ensnare")
+			local disabled = target:DoesHaveModifier("modifier_sheepstick_debuff") or target:DoesHaveModifier("modifier_lion_voodoo_restoration") or target:DoesHaveModifier("modifier_shadow_shaman_voodoo_restoration") or target:IsStunned()
 				for i,v in ipairs(nc) do
 					if v.controllable and v.handle ~= creepHandle then
 						if v.unitState ~= -1031241196 then
 							local distance = GetDistance2D(v,target)
 							if distance <= 1300 then
 								if v.name == "npc_dota_neutral_centaur_khan" then
-									if v:GetAbility(1):CanBeCasted() and distance < 250 and not (CheckStun or CheckSetka) then
+									if v:GetAbility(1):CanBeCasted() and distance < 200 and not disabled then
 										v:CastAbility(v:GetAbility(1),nil)
 									end
 								elseif v.name == "npc_dota_neutral_satyr_hellcaller" then
@@ -107,7 +106,7 @@ function Tick( tick )
 										v:CastAbility(v:GetAbility(1),nil)
 									end							
 								elseif v.name == "npc_dota_neutral_dark_troll_warlord" then
-									if v:GetAbility(1):CanBeCasted() and distance < 550 and not (CheckStun or CheckSetka) then
+									if v:GetAbility(1):CanBeCasted() and distance < 550 and not disabled then
 										v:CastAbility(v:GetAbility(1),target)
 									end							
 								end
@@ -207,7 +206,7 @@ function Tick( tick )
 				for i,v in ipairs(vf) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v:GetAbility(1):CanBeCasted() and distance <= 110 then
+						if v:GetAbility(1):CanBeCasted() and distance <= 110 and not disabled then
 							v:CastAbility(v:GetAbility(1))
 						end
 						if v.health/v.maxHealth < 0.25 and v:GetAbility(1):CanBeCasted() then
@@ -236,7 +235,7 @@ function Tick( tick )
 						if mj and mj:CanBeCasted() and distance <= 525 then
 							v:CastAbility(mj,v)
 						end
-						if ab and ab:CanBeCasted() and distance <= 140 then
+						if ab and ab:CanBeCasted() and distance <= 140 and not disabled then
 							v:CastAbility(ab,target)
 						end
 						if distance <= 1300 then
@@ -261,7 +260,6 @@ function Tick( tick )
 		end
 	end
 	sleepTick = tick + 500
-	return
 end
 
 function isPosEqual(v1, v2, d)
