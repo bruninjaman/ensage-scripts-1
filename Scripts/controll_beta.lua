@@ -206,10 +206,7 @@ function Tick( tick )
 				for i,v in ipairs(vf) do
 					if v.controllable and v.unitState ~= -1031241196 then
 						local distance = GetDistance2D(v,target)
-						if v:GetAbility(1):CanBeCasted() and distance <= 110 and not disabled then
-							v:CastAbility(v:GetAbility(1))
-						end
-						if v.health/v.maxHealth < 0.25 and v:GetAbility(1):CanBeCasted() then
+						if v.health/v.maxHealth < 0.26 and v:GetAbility(1):CanBeCasted() then
 							v:CastAbility(v:GetAbility(1))
 						end
 						if distance <= 1300 then
