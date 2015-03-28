@@ -95,15 +95,15 @@ function Tick( tick )
 							if distance <= 1300 then
 								if v.name == "npc_dota_neutral_centaur_khan" then
 									if v:GetAbility(1):CanBeCasted() and distance < 200 and not disabled then
-										v:CastAbility(v:GetAbility(1),nil)
+										v:CastAbility(v:GetAbility(1))
 									end
 								elseif v.name == "npc_dota_neutral_satyr_hellcaller" then
-									if v:GetAbility(1):CanBeCasted() and distance < 980 then
+									if v:GetAbility(1):CanBeCasted() and distance < 850 then
 										v:CastAbility(v:GetAbility(1),target.position)
 									end						
 								elseif v.name == "npc_dota_neutral_polar_furbolg_ursa_warrior" then
-									if v:GetAbility(1):CanBeCasted() and distance < 300 then
-										v:CastAbility(v:GetAbility(1),nil)
+									if v:GetAbility(1):CanBeCasted() and distance < 240 then
+										v:CastAbility(v:GetAbility(1))
 									end							
 								elseif v.name == "npc_dota_neutral_dark_troll_warlord" then
 									if v:GetAbility(1):CanBeCasted() and distance < 550 and not disabled then
@@ -259,7 +259,7 @@ function Tick( tick )
 			end
 		end
 	end
-	sleepTick = tick + 500
+	sleepTick = tick + 250
 end
 
 function isPosEqual(v1, v2, d)
@@ -277,6 +277,7 @@ end
 
 function Close()
 	eff = {}
+	ordered = {}
 	activated = false
 	stack = false
 	creepHandle = nil
