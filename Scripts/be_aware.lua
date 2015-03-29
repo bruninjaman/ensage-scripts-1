@@ -5,14 +5,24 @@ local play = false
 
 function Tick(tick)
 	if not SleepCheck() then return end
+	local me = entityList:GetMyHero()
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	for i,v in ipairs(hero) do
 		if v.team ~= team and v.visible and v.alive then
 			if v:FindModifier("modifier_mirana_moonlight_shadow") then
 				GenerateSideMessage("mirana","mirana_invis")
 				Sleep(10000)
+			elseif v:FindModifier("modifier_alchemist_unstable_concoction") then
+				GenerateSideMessage("alchemist","alchemist_unstable_concoction")
+				Sleep(10000)
 			elseif v:FindModifier("modifier_morph_replicate") then
 				GenerateSideMessage("morphling","morphling_replicate")
+				Sleep(10000)
+			elseif v:FindModifier("modifier_ember_spirit_fire_remnant_timer") then
+				GenerateSideMessage("ember_spirit","ember_spirit_fire_remnant")
+				Sleep(15000)
+			elseif me:FindModifier("modifier_invoker_ghost_walk_enemy") then
+				GenerateSideMessage("invoker","invoker_ghost_walk")
 				Sleep(10000)
 			elseif v.name == "npc_dota_hero_oracle" and v:GetAbility(4).abilityPhase then
 				GenerateSideMessage("oracle","oracle_false_promise")
