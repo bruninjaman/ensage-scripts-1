@@ -6,28 +6,26 @@ local play = false
 function Tick(tick)
 	if not PlayingGame() then return end
 	local me = entityList:GetMyHero()
-	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
-	for i,v in ipairs(hero) do
-		if v.team ~= team and v.visible and v.alive then
-			if SleepCheck("mirana") and v:FindModifier("modifier_mirana_moonlight_shadow") then
-				GenerateSideMessage("mirana","mirana_invis")
-				Sleep(15000,"mirana")
-			elseif SleepCheck("alchemist") and v:FindModifier("modifier_alchemist_unstable_concoction") then
-				GenerateSideMessage("alchemist","alchemist_unstable_concoction")
-				Sleep(10000,"alchemist")
-			elseif SleepCheck("morphling") and v:FindModifier("modifier_morph_replicate") then
-				GenerateSideMessage("morphling","morphling_replicate")
-				Sleep(10000,"morphling")
-			elseif SleepCheck("ember_spirit") and v:FindModifier("modifier_ember_spirit_fire_remnant_timer") then
-				GenerateSideMessage("ember_spirit","ember_spirit_fire_remnant")
-				Sleep(15000,"ember_spirit")
-			elseif SleepCheck("invoker") and me:FindModifier("modifier_invoker_ghost_walk_enemy") then
-				GenerateSideMessage("invoker","invoker_ghost_walk")
-				Sleep(10000,"invoker")
-			elseif SleepCheck("oracle") and v.name == "npc_dota_hero_oracle" and v:GetAbility(4).abilityPhase then
-				GenerateSideMessage("oracle","oracle_false_promise")
-				Sleep(10000,"oracle") 
-			end
+	local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO, visible = true, alive = true, team = me:GetEnemyTeam(), illusion=false})
+	for i,v in ipairs(enemies) do
+		if SleepCheck("mirana") and v:FindModifier("modifier_mirana_moonlight_shadow") then
+			GenerateSideMessage("mirana","mirana_invis")
+			Sleep(15000,"mirana")
+		elseif SleepCheck("alchemist") and v:FindModifier("modifier_alchemist_unstable_concoction") then
+			GenerateSideMessage("alchemist","alchemist_unstable_concoction")
+			Sleep(10000,"alchemist")
+		elseif SleepCheck("morphling") and v:FindModifier("modifier_morph_replicate") then
+			GenerateSideMessage("morphling","morphling_replicate")
+			Sleep(10000,"morphling")
+		elseif SleepCheck("ember_spirit") and v:FindModifier("modifier_ember_spirit_fire_remnant_timer") then
+			GenerateSideMessage("ember_spirit","ember_spirit_fire_remnant")
+			Sleep(15000,"ember_spirit")
+		elseif SleepCheck("invoker") and me:FindModifier("modifier_invoker_ghost_walk_enemy") then
+			GenerateSideMessage("invoker","invoker_ghost_walk")
+			Sleep(10000,"invoker")
+		elseif SleepCheck("oracle") and v.name == "npc_dota_hero_oracle" and v:GetAbility(4).abilityPhase then
+			GenerateSideMessage("oracle","oracle_false_promise")
+			Sleep(10000,"oracle") 
 		end
 	end
 end
