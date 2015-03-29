@@ -10,10 +10,10 @@ function Tick(tick)
 		if v.team ~= team and v.visible and v.alive then
 			if v:FindModifier("modifier_mirana_moonlight_shadow") then
 				GenerateSideMessage("mirana","mirana_invis")
-				Sleep(7000)
+				Sleep(10000)
 			elseif v:FindModifier("modifier_morph_replicate") then
 				GenerateSideMessage("morphling","morphling_replicate")
-				Sleep(7000)
+				Sleep(10000)
 			end
 		end
 	end
