@@ -16,7 +16,7 @@ function Tick(tick)
 				Sleep(10000)
 			elseif v.name == "npc_dota_hero_oracle" then
 				if v:GetAbility(4) and v:GetAbility(4).level > 0 and v:GetAbility(4).abilityPhase  then
-					GenerateSideMessage("oracle","oracle_fortunes_end")
+					GenerateSideMessage("oracle","oracle_false_promise")
 					Sleep(10000) 
 				end
 			end
