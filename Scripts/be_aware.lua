@@ -4,13 +4,16 @@ require("libs.SideMessage")
 local play = false
 
 function Tick(tick)
-    if sleepTick and sleepTick > tick then return end
+	if not SleepCheck() then return end
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	for i,v in ipairs(hero) do
 		if v.team ~= team and v.visible and v.alive then
 			if v:FindModifier("modifier_mirana_moonlight_shadow") then
 				GenerateSideMessage("mirana","mirana_invis")
-				sleepTick= GetTick() + 5500
+				Sleep(7000)
+			elseif v:FindModifier("modifier_morph_replicate") then
+				GenerateSideMessage("morphling","morphling_replicate")
+				Sleep(7000)
 			end
 		end
 	end
