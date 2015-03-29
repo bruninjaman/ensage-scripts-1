@@ -14,7 +14,7 @@ function Tick(tick)
 		elseif SleepCheck("alchemist") and v:FindModifier("modifier_alchemist_unstable_concoction") then
 			GenerateSideMessage("alchemist","alchemist_unstable_concoction")
 			Sleep(10000,"alchemist")
-		elseif SleepCheck("morphling") and v:FindModifier("modifier_morph_replicate") then
+		elseif SleepCheck("morphling") and v:FindModifier("modifier_morphling_replicate_timer") then
 			GenerateSideMessage("morphling","morphling_replicate")
 			Sleep(10000,"morphling")
 		elseif SleepCheck("ember_spirit") and v:FindModifier("modifier_ember_spirit_fire_remnant_timer") then
