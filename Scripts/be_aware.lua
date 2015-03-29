@@ -14,6 +14,11 @@ function Tick(tick)
 			elseif v:FindModifier("modifier_morph_replicate") then
 				GenerateSideMessage("morphling","morphling_replicate")
 				Sleep(10000)
+			elseif v.name == "npc_dota_hero_oracle" then
+				if v:GetAbility(4) and v:GetAbility(4).level > 0 and v:GetAbility(4).abilityPhase  then
+					GenerateSideMessage("oracle","oracle_fortunes_end")
+					Sleep(10000) 
+				end
 			end
 		end
 	end
