@@ -1,35 +1,18 @@
 require("libs.Utils")
 require("libs.SideMessage")
 
-local play = false local isMoonlightCasted = false
+local play = false
 
 function Tick(tick)
-    if not PlayingGame() or not SleepCheck() then return end
+    if sleepTick and sleepTick > tick then return end
 	local hero = entityList:GetEntities({type=LuaEntity.TYPE_HERO})
 	for i,v in ipairs(hero) do
-		if v.team ~= team and not v:IsIllusion() then
-			if v.classId == CDOTA_Unit_Hero_Mirana then
-				MoonlightShadow(hero,team)
-				Sleep(1700)
-			end
-		end
-	end
-end
-
-function MoonlightShadow(hero,team)
-	local target = nil
-	for i,v in ipairs(hero) do
 		if v.team ~= team and v.visible and v.alive then
-			if isMoonlightCasted and not v:DoesHaveModifier("modifier_mirana_moonlight_shadow") then
-				isMoonlightCasted = not isMoonlightCasted
-			elseif not isMoonlightCasted and v:DoesHaveModifier("modifier_mirana_moonlight_shadow") then
-				target = v
-				isMoonlightCasted = not isMoonlightCasted
+			if v:FindModifier("modifier_mirana_moonlight_shadow") then
+				GenerateSideMessage("mirana","mirana_invis")
+				sleepTick= GetTick() + 5500
 			end
 		end
-	end
-	if target then
-		GenerateSideMessage("mirana","mirana_invis")
 	end
 end
 
