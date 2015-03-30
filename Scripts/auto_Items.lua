@@ -12,16 +12,12 @@ function Tick(tick)
 	if SleepCheck("bloodstone") and me.alive and not me:IsInvisible() and not me:IsChanneling() then
 		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
 			me:CastAbility(bloodstone,me.position) Sleep(700,"bloodstone")
-		end
-		if SleepCheck("bottle") and bottle and bottle:CanBeCasted() and me:DoesHaveModifier("modifier_fountain_aura_buff") and not me:DoesHaveModifier("modifier_bottle_regeneration") and (me.health < me.maxHealth or me.mana < me.maxMana) then
+		elseif SleepCheck("bottle") and bottle and bottle:CanBeCasted() and me:DoesHaveModifier("modifier_fountain_aura_buff") and not me:DoesHaveModifier("modifier_bottle_regeneration") and (me.health < me.maxHealth or me.mana < me.maxMana) then
 			me:CastAbility(bottle) Sleep(700,"bottle")
-		end
-		if SleepCheck("phaseboots") and phaseboots and phaseboots:CanBeCasted() then
+		elseif SleepCheck("phaseboots") and phaseboots and phaseboots:CanBeCasted() then
 			me:CastAbility(phaseboots) Sleep(700,"phaseboots")
-		end
-		if SleepCheck("stick") and stick and stick:CanBeCasted() and stick.charges > 0 and me.health/me.maxHealth < 0.3 then
-			me:CastAbility(stick) Sleep(700,"stick")
-		end
+		elseif SleepCheck("stick") and stick and stick:CanBeCasted() and stick.charges > 0 and me.health/me.maxHealth < 0.3 then
+			me:CastAbility(stick) Sleep(700,"stick") end
 		if SleepCheck("midas") and midas and midas:CanBeCasted() then
 			for _,v in ipairs(creeps) do
 				if GetDistance2D(me,v) < 700 and v:CanDie() and v.maxHealth >= 950 and v.ancient == false and v.level >= 5 then
