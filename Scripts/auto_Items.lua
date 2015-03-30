@@ -20,7 +20,7 @@ function Tick(tick)
 			me:CastAbility(stick) Sleep(700,"stick") end
 		if SleepCheck("midas") and midas and midas:CanBeCasted() then
 			for _,v in ipairs(creeps) do
-				if GetDistance2D(me,v) < 700 and v:CanDie() and v.maxHealth >= 950 and v.ancient == false and v.level >= 5 then
+				if GetDistance2D(me,v) < 700 and v.level >= 5 and v.team ~= me.team and v.alive and v.visible and v.spawned and not v.ancient and v.health > 0 then
 					me:CastAbility(midas,v) Sleep(700,"midas")
 				end
 			end
