@@ -26,8 +26,7 @@ function Tick(tick)
 			end
 
 			if SleepCheck("Track") and Track and Track:CanBeCasted() and not buff and distance <= 1200 then
-				if invisBottle and invisBottle.storedRune == 3 then
-					me:CastAbility(Track,v) Sleep(700,"Track") Sleep(700,"Track")
+				if invisBottle and invisBottle.storedRune == 3 then me:CastAbility(Track,v) Sleep(700,"Track") Sleep(700,"Track")
 				elseif invis and v:CanCast() then me:CastAbility(Track,v) Sleep(700,"Track")
 				elseif v.name == "npc_dota_hero_riki" then me:CastAbility(Track,v) Sleep(700,"Track")
 				elseif v.name == "npc_dota_hero_clinkz" then me:CastAbility(Track,v) Sleep(700,"Track")
