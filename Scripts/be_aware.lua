@@ -16,6 +16,8 @@ function Tick(tick)
 			GenerateSideMessage("morphling","morphling_replicate") Sleep(10000,"morphling")
 		elseif SleepCheck("ember_spirit") and v:FindModifier("modifier_ember_spirit_fire_remnant_timer") then
 			GenerateSideMessage("ember_spirit","ember_spirit_fire_remnant") Sleep(15000,"ember_spirit")
+		elseif SleepCheck("bloodseeker") and v:FindModifier("modifier_bloodseeker_thirst_speed") then
+			GenerateSideMessage("bloodseeker","bloodseeker_thirst") Sleep(15000,"bloodseeker")
 		elseif SleepCheck("invoker") and me:FindModifier("modifier_invoker_ghost_walk_enemy") then
 			GenerateSideMessage("invoker","invoker_ghost_walk") Sleep(10000,"invoker")
 		elseif SleepCheck("oracle") and v.name == "npc_dota_hero_oracle" and v:GetAbility(4).abilityPhase then
