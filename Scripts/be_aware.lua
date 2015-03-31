@@ -21,17 +21,27 @@ function Tick(tick)
 		elseif SleepCheck("invoker") and me:FindModifier("modifier_invoker_ghost_walk_enemy") then
 			GenerateSideMessage("invoker","invoker_ghost_walk") Sleep(10000,"invoker")
 		elseif SleepCheck("oracle") and v.name == "npc_dota_hero_oracle" and v:GetAbility(4).abilityPhase then
-			GenerateSideMessage("oracle","oracle_false_promise") Sleep(10000,"oracle") 
+			GenerateSideMessage("oracle","oracle_false_promise") Sleep(10000,"oracle")
+		elseif SleepCheck("shadowblade") and v:FindModifier("modifier_item_invisibility_edge_windwalk") then
+			ItemSideMessage(v.name:gsub("npc_dota_hero_",""),"invis_sword") Sleep(10000,"shadowblade") 
 		end
 	end
 end
 
 function GenerateSideMessage(heroName,spellName)
-	local test = sideMessage:CreateMessage(180,50)
-	test:AddElement(drawMgr:CreateRect(10,10,54,30,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/heroes_horizontal/"..heroName)))
-	test:AddElement(drawMgr:CreateRect(70,12,62,31,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/other/arrow_usual")))
-	test:AddElement(drawMgr:CreateRect(140,10,30,30,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/spellicons/"..spellName)))
+	local test = sideMessage:CreateMessage(180,48)
+	test:AddElement(drawMgr:CreateRect(006,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/heroes_horizontal/"..heroName)))
+	test:AddElement(drawMgr:CreateRect(078,12,64,32,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/other/arrow_usual")))
+	test:AddElement(drawMgr:CreateRect(142,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/spellicons/"..spellName)))
 end
+
+function ItemSideMessage(heroName,itemName)
+	local test = sideMessage:CreateMessage(180,48)
+	test:AddElement(drawMgr:CreateRect(006,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/heroes_horizontal/"..heroName)))
+	test:AddElement(drawMgr:CreateRect(078,12,64,32,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/other/arrow_usual")))
+    test:AddElement(drawMgr:CreateRect(142,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/items/"..(itemName))))
+end
+
 
 function Load()
 	if PlayingGame() then
