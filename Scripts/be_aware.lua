@@ -29,10 +29,10 @@ function Tick(tick)
 end
 
 function GenerateSideMessage(heroName,spellName)
-	local test = sideMessage:CreateMessage(180,48)
-	test:AddElement(drawMgr:CreateRect(006,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/heroes_horizontal/"..heroName)))
-	test:AddElement(drawMgr:CreateRect(078,12,64,32,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/other/arrow_usual")))
-	test:AddElement(drawMgr:CreateRect(142,06,72,36,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/spellicons/"..spellName)))
+	local test = sideMessage:CreateMessage(180,50)
+	test:AddElement(drawMgr:CreateRect(10,10,54,30,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/heroes_horizontal/"..heroName)))
+	test:AddElement(drawMgr:CreateRect(70,12,62,31,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/other/arrow_usual")))
+	test:AddElement(drawMgr:CreateRect(140,10,30,30,0xFFFFFFFF,drawMgr:GetTextureId("NyanUI/spellicons/"..spellName)))
 end
 
 function ItemSideMessage(heroName,itemName)
