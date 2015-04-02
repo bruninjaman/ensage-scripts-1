@@ -7,9 +7,7 @@ local distance = 600 -- min distance for move
 
 function Tick(tick)
 	if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if not me then return end
-	local forward = FindMove(me)
-	
+    local me = entityList:GetMyHero() local forward = FindMove(me)
 	if forward ~= nil then
 		if me:DoesHaveModifier("modifier_phoenix_sun_ray") then
 			play = true
@@ -82,7 +80,6 @@ function Load()
 			script:Disable() 
 		else
 			play = true
-			victim = nil
 			script:RegisterEvent(EVENT_KEY,Key)
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)

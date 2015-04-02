@@ -11,7 +11,7 @@ config:Load()
 toggleKey = config.Hotkey
 sleep = 0
 
-local play = false local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
+local play = false myhero = nil local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
 
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
@@ -19,7 +19,8 @@ local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Chasing 
 
 function Main(tick)
 	if not PlayingGame() then return end
-    local me = entityList:GetMyHero() if not me then return end
+	local me = entityList:GetMyHero()
+	local ID = me.classId if ID ~= myhero then return end
  	
 	if victim and victim.visible then 
 		if not victimText.visible then
@@ -163,6 +164,7 @@ function Load()
 			start = false
 			sleep = 0 
 			resettime = nil
+			myhero = me.classId
 			script:RegisterEvent(EVENT_FRAME, Main)
 			script:UnregisterEvent(Load)
 		end
@@ -170,6 +172,7 @@ function Load()
 end
 
 function Close()
+	myhero = nil
 	victim = nil
 	start = false
 	resettime = nil

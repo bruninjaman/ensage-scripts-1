@@ -9,11 +9,13 @@ config:Load()
 timeTrack = config.hpTrack
 lasthit = config.killSteal
 
-local play = false local dmg = {100,200,250,325}
+local play = false local myhero = nil local dmg = {100,200,250,325}
 
 function Tick(tick)
     if not PlayingGame() then return end
-    local me = entityList:GetMyHero() local Toss = me:GetAbility(1) local Track = me:GetAbility(4)
+    local me = entityList:GetMyHero()
+    local ID = me.classId if ID ~= myhero then return end
+    local Toss = me:GetAbility(1) local Track = me:GetAbility(4)
     local enemies = entityList:GetEntities({type=LuaEntity.TYPE_HERO, visible = true, alive = true, team = me:GetEnemyTeam(), illusion=false})
     for i,v in ipairs(enemies) do
     	local distance = GetDistance2D(me,v)
@@ -50,6 +52,7 @@ function Load()
 			script:Disable() 
 		else
 			play = true
+			myhero = me.classId
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
 		end
@@ -57,6 +60,7 @@ function Load()
 end
 
 function Close()
+	myhero = nil
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)
