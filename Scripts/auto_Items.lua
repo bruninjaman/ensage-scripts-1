@@ -9,8 +9,8 @@ function Tick(tick)
 	local phaseboots = me:FindItem("item_phase_boots") local midas = me:FindItem("item_hand_of_midas")
 	local stick = me:FindItem("item_magic_stick") or me:FindItem("item_magic_wand")
 	local creeps = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=false,alive=true,illusion=false})
-	if SleepCheck("bloodstone") and me.alive and not me:IsInvisible() and not me:IsChanneling() then
-		if enableBloodstone and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
+	if me.alive and not me:IsInvisible() and not me:IsChanneling() then
+		if SleepCheck("bloodstone") and bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
 			me:CastAbility(bloodstone,me.position) Sleep(700,"bloodstone")
 		elseif SleepCheck("bottle") and bottle and bottle:CanBeCasted() and me:DoesHaveModifier("modifier_fountain_aura_buff") and not me:DoesHaveModifier("modifier_bottle_regeneration") and (me.health < me.maxHealth or me.mana < me.maxMana) then
 			me:CastAbility(bottle) Sleep(700,"bottle")
