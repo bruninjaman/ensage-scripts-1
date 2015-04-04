@@ -8,11 +8,11 @@ config:Load()
 
 toggleKey = config.Hotkey
 
-local play  = false
+local play = false
 
 function Tick(tick)
 	if not PlayingGame() then return end
-	local me = entityList:GetMyHero() local mp = entityList:GetMyPlayer()  local sel = mp.selection[1]
+	local mp = entityList:GetMyPlayer()  local sel = mp.selection[1]
 	local scroll = sel:FindItem("item_tpscroll") or sel:FindItem("item_travel_boots")
 
 	if mp.team == LuaEntity.TEAM_RADIANT then
