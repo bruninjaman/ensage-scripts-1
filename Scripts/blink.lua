@@ -3,13 +3,11 @@ require("libs.Utils")
 
 config = ScriptConfig.new()
 config:SetParameter("hotkey", "F", config.TYPE_HOTKEY)
-config:SetParameter("range", true)
 config:Load()
 
 toggleKey = config.hotkey
-showmerange = config.range
 
-local rangeEffect = {} local play = false
+local eff = {} local play = false
 
 function Tick(tick)
     if not PlayingGame() then return end
@@ -30,10 +28,9 @@ function Tick(tick)
         end
     end
     
-    if not rangeEffect[me.handle] and showmerange then
-        rangeEffect[me.handle] = Effect(me,"range_display")
-        rangeEffect[me.handle]:SetVector(1, Vector(1200,0,0))
-    	collectgarbage("collect")
+    if not eff[me.handle] then
+        eff[me.handle] = Effect(me,"range_display")
+        eff[me.handle]:SetVector(1, Vector(1200,0,0))
     end
 end
 
@@ -46,7 +43,7 @@ function Load()
 end
 
 function Close()
-    rangeEffect = {}
+    eff = {}
     collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)
