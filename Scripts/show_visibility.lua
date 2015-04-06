@@ -5,11 +5,11 @@ local play = false local eff = {}
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero()
-    local entities = entityList:GetEntities(function (v) return (v.type==LuaEntity.TYPE_HERO or v.classId==CDOTA_BaseNPC_Creep_Neutral or v.classId==CDOTA_Unit_Courier or v.classId==CDOTA_NPC_Observer_Ward or v.classId==CDOTA_NPC_Observer_Ward_TrueSight or v.classId==CDOTA_NPC_TechiesMines) and v.team==me.team end)
+    local entities = entityList:GetEntities(function (v) return (v.type==LuaEntity.TYPE_HERO or v.classId==CDOTA_BaseNPC_Creep_Neutral or v.classId==CDOTA_Unit_Courier or v.classId==CDOTA_NPC_Observer_Ward or v.classId==CDOTA_NPC_Observer_Ward_TrueSight or v.classId==CDOTA_NPC_TechiesMines or me) and v.team==me.team end)
     for _,v in ipairs(entities) do
         if v.visibleToEnemy and v.alive then
             if not eff[v.handle] then                            
-                eff[v.handle] = Effect(v,"aura_shivas")
+                eff[v.handle] = Effect(v,"aura_shivas_ring")
                 eff[v.handle]:SetVector(1,Vector(0,0,0))
             end
         elseif eff[v.handle] then
