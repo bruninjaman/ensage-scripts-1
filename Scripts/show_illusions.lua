@@ -1,7 +1,6 @@
 local play = false
-local sleepTick = 0
 local heroTable = {}
-local illusionTable = {}   
+local illusionTable = {}
 
 function Tick(tick)
     if not PlayingGame() then return end
@@ -17,15 +16,12 @@ function Tick(tick)
 					illusionTable[heroEntity.handle].effect3 = Effect(heroEntity,"smoke_of_deceit_buff")			
 					illusionTable[heroEntity.handle].effect4 = Effect(heroEntity,"smoke_of_deceit_buff")
 				end
-			else
-				if illusionTable[heroEntity.handle] then
-					illusionTable[heroEntity.handle] = nil
-				end
+			elseif illusionTable[heroEntity.handle] then
+				illusionTable[heroEntity.handle] = nil
+				collectgarbage("collect")
 			end
 		end
-	end
-	Sleep(250)
-	collectgarbage("collect")
+	end	
 end
 
 function Load()

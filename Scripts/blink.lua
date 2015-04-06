@@ -12,6 +12,12 @@ local eff = {} local play = false
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero()
+
+    if not eff[me.handle] then
+        eff[me.handle] = Effect(me,"range_display")
+        eff[me.handle]:SetVector(1, Vector(1200,0,0))
+    end
+    
     if IsKeyDown(toggleKey) and not client.chat then
         local blink = me:FindItem("item_blink")
         local distance = math.sqrt(math.pow(client.mousePosition.x - me.position.x, 2) + math.pow(client.mousePosition.y - me.position.y, 2))
@@ -26,11 +32,6 @@ function Tick(tick)
                 me:CastAbility(blink, Vector(client.mousePosition.x, client.mousePosition.y, 0))
             end
         end
-    end
-    
-    if not eff[me.handle] then
-        eff[me.handle] = Effect(me,"range_display")
-        eff[me.handle]:SetVector(1, Vector(1200,0,0))
     end
 end
 
