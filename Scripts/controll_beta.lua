@@ -108,7 +108,14 @@ function Tick( tick )
 								elseif v.name == "npc_dota_neutral_dark_troll_warlord" then
 									if v:GetAbility(1):CanBeCasted() and distance < 550 and not disabled then
 										v:CastAbility(v:GetAbility(1),target)
-									end							
+									end	
+								elseif v.name == "npc_dota_neutral_big_thunder_lizard" then
+									if v:GetAbility(1):CanBeCasted() and distance < 250 then
+										v:CastAbility(v:GetAbility(1))
+									end
+									if v:GetAbility(2):CanBeCasted() then
+										v:CastAbility(v:GetAbility(2))
+									end					
 								end
 								if distance <= 1300 then
 									v:Attack(target)
