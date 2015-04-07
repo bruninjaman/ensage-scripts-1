@@ -91,6 +91,7 @@ function Close()
 	Toggle,Toggle_1 = false,false
 	collectgarbage("collect")
 	if play then
+		script:UnregisterEvent(Tick)
 		script:RegisterEvent(EVENT_TICK,Load)
 		play = false
 	end
