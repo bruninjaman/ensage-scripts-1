@@ -1,5 +1,4 @@
 local play = false
-local heroTable = {}
 local illusionTable = {}
 
 function Tick(tick)
@@ -33,7 +32,6 @@ function Load()
 end
 
 function Close()
-	heroTable = {}
 	llusionTable = {}
 	collectgarbage("collect")
 	if play then	
