@@ -1,20 +1,19 @@
-local eff = {}
 local Play = false
+local eff = {}
 
 function Tick(tick)
     if not PlayingGame() then return end
     local me = entityList:GetMyHero()
 	local towers = entityList:FindEntities({classId=CDOTA_BaseNPC_Tower,alive=true})
-	local clear = false
 	for i,v in ipairs(towers) do
 		if GetDistance2D(me,v) < 1400 then
 			if not eff[v.handle] then
 				eff[v.handle] = Effect(v,"range_display")
-				eff[v.handle]:SetVector( 1, Vector(850,0,0) )
+				eff[v.handle]:SetVector(1,Vector(850,0,0))
 			end
 		elseif eff[v.handle] then
 			eff[v.handle] = nil
-			clear = true
+			collectgarbage("collect")
 		end
 	end	
 end

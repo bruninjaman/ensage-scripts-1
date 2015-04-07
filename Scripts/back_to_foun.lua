@@ -22,7 +22,7 @@ function Tick(tick)
 	end
 
 	if IsKeyDown(toggleKey) and not client.chat then
-		if SleepCheck("scroll") and scroll and scroll:CanBeCasted() then
+		if sel and SleepCheck("scroll") and scroll and scroll:CanBeCasted() then
 			sel:CastAbility(scroll,foun) Sleep(700,"scroll")
 		end
 	end
