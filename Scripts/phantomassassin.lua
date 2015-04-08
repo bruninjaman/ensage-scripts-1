@@ -24,7 +24,7 @@ function Tick(tick)
 		local Q = me:GetAbility(1)
 		local creeps = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Lane,team=TEAM_ENEMY,alive=true,visible=true,team = me:GetEnemyTeam()})
 		for i,v in ipairs(creeps) do
-			if SleepCheck("lasthit") and GetDistance2D(v,me) < 1200 and Q:CanBeCasted() and me:CanCast() and (v.health > 0 and v.health < dmg[Q.level]) then
+			if SleepCheck("lasthit") and Q and Q:CanBeCasted() and (v.health > 0 and v.health < dmg[Q.level]) and GetDistance2D(v,me) <= Q.castRange then
 				me:CastAbility(Q,v)
 				Sleep(1000+me:GetTurnTime(v)*1000,"lasthit")
 			end
