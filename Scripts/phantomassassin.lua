@@ -3,12 +3,12 @@ require("libs.TargetFind")
 require("libs.Utils")
 
 config = ScriptConfig.new()
-config:SetParameter("combokey", "D", config.TYPE_HOTKEY)
-config:SetParameter("lasthitforcreep", "E", config.TYPE_HOTKEY)
+config:SetParameter("combo", "D", config.TYPE_HOTKEY)
+config:SetParameter("lasthit", "E", config.TYPE_HOTKEY)
 config:Load()
 
-hotkey1 = config.combokey
-hotkey2 = config.lasthitforcreep
+hotkey1 = config.combo
+hotkey2 = config.lasthit
 
 local play = false local myhero = nil local victim = nil local start = false local resettime = nil local dmg = {60,100,140,180}
 local monitor = client.screenSize.x/1600
@@ -26,7 +26,7 @@ function Tick(tick)
 		for i,v in ipairs(creeps) do
 			if SleepCheck("lasthit") and GetDistance2D(v,me) < 1200 and Q:CanBeCasted() and me:CanCast() and (v.health > 0 and v.health < dmg[Q.level]) then
 				me:CastAbility(Q,v)
-				Sleep(1000+me:GetTurnTime(v)*700,"lasthit")
+				Sleep(1000+me:GetTurnTime(v)*1000,"lasthit")
 			end
 		end
 	end
@@ -65,31 +65,31 @@ function Tick(tick)
 			local satanic = me:FindItem("item_satanic")
 			if SleepCheck("follow") and GetDistance2D(victim,me) <= 1500 then
 				me:Attack(victim)
-				Sleep(1000+me:GetTurnTime(victim)*3500,"follow")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"follow")
 			end
 			if Q and Q:CanBeCasted() and GetDistance2D(victim,me) <= Q.castRange then
 				me:CastAbility(Q,victim)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if W and W:CanBeCasted() and GetDistance2D(victim,me) <= W.castRange then
 				me:CastAbility(W,victim)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if abyssal and abyssal:CanBeCasted() and GetDistance2D(victim,me) <= abyssal.castRange then
 				me:CastAbility(abyssal,victim)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if butterfly and butterfly:CanBeCasted() and GetDistance2D(victim,me) <= 3000 then
 				me:CastAbility(butterfly)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if mom and mom:CanBeCasted() and GetDistance2D(victim,me) <= me.attackRange then
 				me:CastAbility(mom)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if satanic and satanic:CanBeCasted() and me.health/me.maxHealth < 0.5 then
-				me:CastAbility(mom)
-				Sleep(1000+me:GetTurnTime(victim)*700,"combo")
+				me:CastAbility(satanic)
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 		end
 	elseif victim then
