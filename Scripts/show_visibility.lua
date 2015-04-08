@@ -9,7 +9,7 @@ function Tick(tick)
     for _,v in ipairs(entities) do
         if v.visibleToEnemy and v.alive then
             if not eff[v.handle] then                            
-                eff[v.handle] = Effect(v,"aura_shivas_ring")
+                eff[v.handle] = Effect(v,"aura_shivas")
                 eff[v.handle]:SetVector(1,Vector(0,0,0))
             end
         elseif eff[v.handle] then
