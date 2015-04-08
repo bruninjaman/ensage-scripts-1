@@ -10,7 +10,7 @@ config:Load()
 hotkey1 = config.combokey
 hotkey2 = config.lasthitforcreep
 
-local play = false local dmg = {60,100,140,180} local victim = nil local start = false
+local play = false local myhero = nil local victim = nil local start = false local resettime = nil local dmg = {60,100,140,180}
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
 local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Doing rape this kid!",F14) victimText.visible = false
@@ -109,6 +109,8 @@ function Load()
 			script:Disable() 
 		else
 			play = true
+			victim = nil
+			start = false			
 			myhero = me.classId
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
@@ -117,6 +119,10 @@ function Load()
 end
 
 function Close()
+	myhero = nil
+	victim = nil
+	start = false
+	resettime = nil
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)

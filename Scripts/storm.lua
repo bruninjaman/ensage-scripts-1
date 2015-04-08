@@ -11,7 +11,7 @@ config:Load()
 toggleKey = config.Hotkey
 sleep = 0
 
-local play = false myhero = nil local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
+local play = false local myhero = nil local victim = nil local attack = 0 local move = 0 local start = false local resettime = nil local movetomouse = nil
 
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
