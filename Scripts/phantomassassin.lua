@@ -3,8 +3,8 @@ require("libs.TargetFind")
 require("libs.Utils")
 
 config = ScriptConfig.new()
-config:SetParameter("combo", "D", config.TYPE_HOTKEY)
-config:SetParameter("lasthit", "E", config.TYPE_HOTKEY)
+config:SetParameter("combo", "32", config.TYPE_HOTKEY)
+config:SetParameter("lasthit", "D", config.TYPE_HOTKEY)
 config:Load()
 
 hotkey1 = config.combo
