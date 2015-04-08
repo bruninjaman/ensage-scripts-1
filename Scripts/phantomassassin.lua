@@ -63,7 +63,8 @@ function Tick(tick)
 			local butterfly = me:FindItem("item_butterfly")
 			local mom = me:FindItem("item_mask_of_madness")
 			local satanic = me:FindItem("item_satanic")
-			if SleepCheck("follow") and GetDistance2D(victim,me) <= 1500 then
+			local disabled = victim:DoesHaveModifier("modifier_sheepstick_debuff") or victim:DoesHaveModifier("modifier_lion_voodoo_restoration") or victim:DoesHaveModifier("modifier_shadow_shaman_voodoo_restoration") or victim:IsStunned()
+			if SleepCheck("follow") and GetDistance2D(victim,me) <= 3000 then
 				me:Attack(victim)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"follow")
 			end
@@ -75,7 +76,7 @@ function Tick(tick)
 				me:CastAbility(W,victim)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
-			if abyssal and abyssal:CanBeCasted() and GetDistance2D(victim,me) <= abyssal.castRange then
+			if abyssal and abyssal:CanBeCasted() and GetDistance2D(victim,me) <= abyssal.castRange and not disabled then
 				me:CastAbility(abyssal,victim)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
@@ -87,7 +88,7 @@ function Tick(tick)
 				me:CastAbility(mom)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
-			if satanic and satanic:CanBeCasted() and me.health/me.maxHealth < 0.5 then
+			if satanic and satanic:CanBeCasted() and me.health/me.maxHealth <= 0.5 then
 				me:CastAbility(satanic)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
