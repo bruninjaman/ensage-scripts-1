@@ -59,6 +59,7 @@ function Tick(tick)
 
 		if victim and SleepCheck("combo") then
 			local Q = me:GetAbility(1) local W = me:GetAbility(2)
+			local medallion = me:FindItem("item_medallion_of_courage")
 			local abyssal = me:FindItem("item_abyssal_blade")
 			local butterfly = me:FindItem("item_butterfly")
 			local mom = me:FindItem("item_mask_of_madness")
@@ -74,6 +75,10 @@ function Tick(tick)
 			end
 			if W and W:CanBeCasted() and GetDistance2D(victim,me) <= W.castRange then
 				me:CastAbility(W,victim)
+				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
+			end
+			if medallion and medallion:CanBeCasted() and GetDistance2D(victim,me) <= me.attackRange then
+				me:CastAbility(medallion,victim)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
 			if abyssal and abyssal:CanBeCasted() and GetDistance2D(victim,me) <= abyssal.castRange and not disabled then
