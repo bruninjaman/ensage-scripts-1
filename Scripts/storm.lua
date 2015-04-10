@@ -82,13 +82,13 @@ function Main(tick)
 							Sleep(CP*1000+me:GetTurnTime(victim)*1000, "casting")
 						end
 					end
-					if Sheep and Sheep:CanBeCasted() and not disabled and not orchided then
+					if SleepCheck("Sheep") and Sheep and Sheep:CanBeCasted() and not disabled and not orchided then
 						me:CastAbility(Sheep, victim)
-						Sleep(1000+me:GetTurnTime(victim)*1000,"casting")
+						Sleep(1000+me:GetTurnTime(victim)*1000,"Sheep")
 					end
-					if Orchid and Orchid:CanBeCasted() and not disabled and not orchided then
+					if SleepCheck("Orchid") and Orchid and Orchid:CanBeCasted() and not disabled and not orchided then
 						me:CastAbility(Orchid, victim)
-						Sleep(1000+me:GetTurnTime(victim)*1000,"casting")
+						Sleep(1000+me:GetTurnTime(victim)*1000,"Orchid")
 					end
 					if Shivas and Shivas:CanBeCasted() then
 						me:CastAbility(Shivas)
