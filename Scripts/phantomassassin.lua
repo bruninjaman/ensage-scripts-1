@@ -64,6 +64,7 @@ function Tick(tick)
 			local butterfly = me:FindItem("item_butterfly")
 			local mom = me:FindItem("item_mask_of_madness")
 			local satanic = me:FindItem("item_satanic")
+			local BlackKingBar = me:FindItem("item_black_king_bar")
 			local Stuff = victim:IsSilenced() or victim:IsHexed() or victim:IsStunned() or victim:IsLinkensProtected()
 			if SleepCheck("follow") and GetDistance2D(victim,me) <= 3000 then
 				me:Attack(victim)
@@ -97,6 +98,20 @@ function Tick(tick)
 				me:CastAbility(satanic)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
+			if BlackKingBar and BlackKingBar:CanBeCasted() then
+				local heroes = entityList:GetEntities(function (v) return v.type==LuaEntity.TYPE_HERO and v.alive and v.visible and v.team~=me.team and me:GetDistance2D(v) <= 1200 end)
+				if #heroes == 3 then
+					me:CastAbility(BlackKingBar)
+					Sleep(client.latency,"combo")
+				elseif #heroes == 4 then
+					me:CastAbility(BlackKingBar)
+					Sleep(client.latency,"combo")
+				elseif #heroes == 5 then
+					me:CastAbility(BlackKingBar)
+					Sleep(client.latency,"combo")
+					return
+				end
+			end	
 		end
 	elseif victim then
 		if not resettime then
