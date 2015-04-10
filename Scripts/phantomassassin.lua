@@ -13,7 +13,7 @@ hotkey2 = config.lasthit
 local play = false local myhero = nil local victim = nil local start = false local resettime = nil local dmg = {60,100,140,180}
 local monitor = client.screenSize.x/1600
 local F14 = drawMgr:CreateFont("F14","Tahoma",14*monitor,550*monitor) 
-local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Doing rape this kid!",F14) victimText.visible = false
+local victimText = drawMgr:CreateText(-50*monitor,1*monitor,0xFFFF00FF,"Going rape this kid!",F14) victimText.visible = false
 
 function Tick(tick)
 	if not PlayingGame() then return end
@@ -93,7 +93,7 @@ function Tick(tick)
 				me:CastAbility(mom)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
-			if satanic and satanic:CanBeCasted() and me.health/me.maxHealth <= 0.5 then
+			if satanic and satanic:CanBeCasted() and me.health/me.maxHealth <= 0.4 and GetDistance2D(victim,me) <= me.attackRange then
 				me:CastAbility(satanic)
 				Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 			end
