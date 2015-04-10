@@ -64,6 +64,7 @@ function Main(tick)
 					local R = me:GetAbility(4) 
 					local W = me:GetAbility(2)
 					local Overload = me:DoesHaveModifier("modifier_storm_spirit_overload")
+					local Sheep = me:FindItem("item_sheepstick")
 					local Orchid = me:FindItem("item_orchid")
 					local Shivas = me:FindItem("item_shivas_guard")
 					local Sphere = me:FindItem("item_sphere")
@@ -81,16 +82,20 @@ function Main(tick)
 							Sleep(CP*1000+me:GetTurnTime(victim)*1000, "casting")
 						end
 					end
+					if Sheep and Sheep:CanBeCasted() and not disabled and not orchided then
+						me:CastAbility(Sheep, victim)
+						Sleep(1000+me:GetTurnTime(victim)*1000,"casting")
+					end
+					if Orchid and Orchid:CanBeCasted() and not disabled and not orchided then
+						me:CastAbility(Orchid, victim)
+						Sleep(1000+me:GetTurnTime(victim)*1000,"casting")
+					end
 					if Shivas and Shivas:CanBeCasted() then
 						me:CastAbility(Shivas)
 						Sleep(me:GetTurnTime(victim)*1000, "casting")
 					end
 					if Sphere and Sphere:CanBeCasted() then
 						me:CastAbility(Sphere,me)
-						Sleep(me:GetTurnTime(victim)*1000, "casting")
-					end
-					if Orchid and Orchid:CanBeCasted() and me:CanCast() and not orchided then
-						me:CastAbility(Orchid, victim)
 						Sleep(me:GetTurnTime(victim)*1000, "casting")
 					end
 					if not Overload then
