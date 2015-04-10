@@ -69,8 +69,7 @@ function Main(tick)
 					local Shivas = me:FindItem("item_shivas_guard")
 					local Sphere = me:FindItem("item_sphere")
 					local distance = GetDistance2D(victim,me)
-					local orchided = victim:DoesHaveModifier("modifier_item_orchid")
-					local disabled = victim:DoesHaveModifier("modifier_sheepstick_debuff") or victim:DoesHaveModifier("modifier_lion_voodoo_restoration") or victim:DoesHaveModifier("modifier_shadow_shaman_voodoo_restoration") or victim:IsStunned()
+					local disabled = victim:IsSilenced() or victim:IsHexed() or victim:IsStunned()
 					local balling = me:DoesHaveModifier("modifier_storm_spirit_ball_lightning")
 					if R and R:CanBeCasted() and me:CanCast() and distance > attackRange and not balling and not R.abilityPhase then
 						local CP = R:FindCastPoint()
@@ -82,13 +81,9 @@ function Main(tick)
 							Sleep(CP*1000+me:GetTurnTime(victim)*1000, "casting")
 						end
 					end
-					if SleepCheck("Sheep") and Sheep and Sheep:CanBeCasted() and not disabled and not orchided then
-						me:CastAbility(Sheep, victim)
-						Sleep(1000+me:GetTurnTime(victim)*1000,"Sheep")
-					end
-					if SleepCheck("Orchid") and Orchid and Orchid:CanBeCasted() and not disabled and not orchided then
+					if Orchid and Orchid:CanBeCasted() and not disabled then
 						me:CastAbility(Orchid, victim)
-						Sleep(1000+me:GetTurnTime(victim)*1000,"Orchid")
+						Sleep(me:GetTurnTime(victim)*1000, "casting")
 					end
 					if Shivas and Shivas:CanBeCasted() then
 						me:CastAbility(Shivas)
