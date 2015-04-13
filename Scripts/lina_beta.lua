@@ -25,7 +25,7 @@ function Tick(tick)
 				me:Follow(victim)
 				move = tick + 350
 			end
-			if GetDistance2D(victim,me) <= 560 then
+			if GetDistance2D(victim,me) <= 500 then
 				me:Attack(victim)
 				follow = false
 				move = tick + 350
