@@ -23,12 +23,12 @@ function Tick(tick)
 		if victim and tick > move then
 			if follow then
 				me:Follow(victim)
-				move = tick + 450
+				move = tick + 350
 			end
-			if GetDistance2D(victim,me) <= 600 then
+			if GetDistance2D(victim,me) <= 560 then
 				me:Attack(victim)
 				follow = false
-				move = tick + 450
+				move = tick + 350
 			end
 			local Q = me:GetAbility(1)
 			local W = me:GetAbility(2)
@@ -42,7 +42,7 @@ function Tick(tick)
 				if W and W:CanBeCasted() and euls and euls.cd > 1 then
 					local distance = GetDistance2D(victim, me)
 					local delay = ((625-Animations.getDuration(W)*1000)+client.latency+me:GetTurnTime(victim)*1000)
-					local speed = 1600
+					local speed = 1100
 					local xyz = SkillShot.SkillShotXYZ(me,victim,delay,speed)
 					if xyz and distance <= W.castRange then 
 						me:CastAbility(W,xyz)
