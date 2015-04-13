@@ -36,7 +36,7 @@ function Tick(tick)
 			if tick > combo and SleepCheck("combo") then
 				if euls and euls:CanBeCasted() and GetDistance2D(victim,me) <= euls.castRange then
 					me:CastAbility(euls,victim)
-					combo = tick + 1700
+					combo = tick + 1630
 					Sleep(1000+me:GetTurnTime(victim)*1000,"combo")
 				end
 				if W and W:CanBeCasted() and euls and euls.cd > 1 then
