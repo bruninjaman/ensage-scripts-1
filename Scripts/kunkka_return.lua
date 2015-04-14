@@ -28,11 +28,9 @@ function Tick(tick)
 				me:CastAbility(Q,victim.position)
 				Sleep(350+client.latency, "combo")
 			end
-			if E.name == "kunkka_return" and me:CanCast() then
-				if math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
-					me:CastAbility(E)
-					Sleep(350+client.latency, "combo")
-				end
+			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
+				me:CastAbility(E)
+				Sleep(350+client.latency, "combo")
 			end
 		end
 	end
