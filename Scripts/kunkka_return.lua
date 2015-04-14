@@ -56,7 +56,7 @@ function Tick(tick)
 
 			if E.name == "kunkka_x_marks_the_spot" and E:CanBeCasted() and me:CanCast() then
 				me:CastAbility(E,victim)
-				 lastpos = victim.position
+				lastpos = victim.position
 				Sleep(250+client.latency, "combo")
 			end
 			if R and R:CanBeCasted() and me:CanCast() and E.level > 0 and E.abilityPhase then
