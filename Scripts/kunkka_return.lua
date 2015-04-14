@@ -12,7 +12,7 @@ toggleKey = config.HotKey
 homeKey = config.HomeKey
 
 
-local play = false local myhero = nil local victim = nil
+local play = false local myhero = nil local victim = nil local start = false
 
 function Tick(tick)
 	if not PlayingGame() then return end
@@ -33,7 +33,7 @@ function Tick(tick)
 
 	if IsKeyDown(homeKey) and not client.chat then
 		local travel = me:FindItem("item_tpscroll") or me:FindItem("item_travel_boots")
-		if E and E:CanBeCasted() and SleepCheck("home") then
+		if E and E:CanBeCasted() and SleepCheck("home") and not start then
 			me:CastAbility(E,me)
 			Sleep(250+client.latency, "home")
 		end
@@ -44,7 +44,7 @@ function Tick(tick)
 	end
 	
 	if victim and SleepCheck("combo") then
-
+		start = true
 		if E.name == "kunkka_x_marks_the_spot" and Q and Q:CanBeCasted() and E.level > 0 and E.abilityPhase then
 			me:CastAbility(Q,victim.position)
 			Sleep(250+client.latency, "combo")
@@ -84,7 +84,7 @@ function Load()
 			script:Disable() 
 		else
 			play = true
-			victim = nil		
+			victim = nil	
 			myhero = me.classId
 			script:RegisterEvent(EVENT_TICK,Tick)
 			script:UnregisterEvent(Load)
@@ -95,6 +95,7 @@ end
 function Close()
 	myhero = nil
 	victim = nil
+	start = false
 	collectgarbage("collect")
 	if play then
 		script:UnregisterEvent(Tick)
