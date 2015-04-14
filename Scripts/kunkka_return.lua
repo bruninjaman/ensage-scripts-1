@@ -5,9 +5,12 @@ require("libs.Utils")
 
 config = ScriptConfig.new()
 config:SetParameter("HotKey", "32", config.TYPE_HOTKEY)
+config:SetParameter("HomeKey", "D", config.TYPE_HOTKEY)
 config:Load()
 
 toggleKey = config.HotKey
+homeKey = config.HomeKey
+
 
 local play = false local myhero = nil local victim = nil
 
@@ -21,6 +24,22 @@ function Tick(tick)
 	local R = me:GetAbility(4)
 
 	local victim = targetFind:GetClosestToMouse(me,2000)
+
+	if me.team == LuaEntity.TEAM_RADIANT then
+		foun = Vector(-7272,-6757,270)
+	else
+		foun = Vector(7200,6624,256)
+	end
+
+	if IsKeyDown(homeKey) and not client.chat then
+		local travel = me:FindItem("item_tpscroll") or me:FindItem("item_travel_boots")
+		if E and E:CanBeCasted() then
+			me:CastAbility(E,me)
+		end
+		if travel and travel:CanBeCasted() then
+			me:CastAbility(travel,foun)
+		end
+	end
 	
 	if victim and SleepCheck("combo") then
 
