@@ -15,22 +15,40 @@ function Tick(tick)
 	local me = entityList:GetMyHero()
 	local ID = me.classId if ID ~= myhero then return end
 
-	if IsKeyDown(toggleKey) and not client.chat then
+	local Q = me:GetAbility(1)
+	local E = me:GetAbility(3)
+	local R = me:GetAbility(4)
+
 	local victim = targetFind:GetClosestToMouse(me,2000)
-		if victim and SleepCheck("combo") then
-			local Q = me:GetAbility(1)
-			local E = me:GetAbility(3)
+	
+	if victim and SleepCheck("combo") then
+
+		if E.name == "kunkka_x_marks_the_spot" and E.level > 0 and E.abilityPhase then
+			me:CastAbility(Q,victim.position)
+			Sleep(150+client.latency, "combo")
+		end
+		if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
+			me:CastAbility(E)
+			Sleep(150+client.latency, "combo")
+		end
+
+		if IsKeyDown(toggleKey) and not client.chat then
+
 			if E.name == "kunkka_x_marks_the_spot" and E:CanBeCasted() and me:CanCast() then
 				me:CastAbility(E,victim)
-				Sleep(350+client.latency, "combo")
+				Sleep(150+client.latency, "combo")
 			end
-			if Q and Q:CanBeCasted() and me:CanCast() and E.level > 0 and E.abilityPhase then
-				me:CastAbility(Q,victim.position)
-				Sleep(350+client.latency, "combo")
+			if R and R:CanBeCasted() and me:CanCast() and E.level > 0 and E.abilityPhase then
+				me:CastAbility(R,victim.position)
+				Sleep(150+client.latency, "combo")
 			end
 			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
 				me:CastAbility(E)
-				Sleep(350+client.latency, "combo")
+				Sleep(150+client.latency, "combo")
+			end
+			if Q and Q:CanBeCasted() and me:CanCast() and R.level > 0 and R.abilityPhase then
+				me:CastAbility(Q,victim.position)
+				Sleep(150+client.latency, "combo")
 			end
 		end
 	end
