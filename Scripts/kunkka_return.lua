@@ -33,11 +33,13 @@ function Tick(tick)
 
 	if IsKeyDown(homeKey) and not client.chat then
 		local travel = me:FindItem("item_tpscroll") or me:FindItem("item_travel_boots")
-		if E and E:CanBeCasted() then
+		if E and E:CanBeCasted() and SleepCheck("home") then
 			me:CastAbility(E,me)
+			Sleep(250+client.latency, "home")
 		end
 		if travel and travel:CanBeCasted() then
 			me:CastAbility(travel,foun)
+			Sleep(250+client.latency, "home")
 		end
 	end
 	
