@@ -24,7 +24,7 @@ function Tick(tick)
 	
 	if victim and SleepCheck("combo") then
 
-		if E.name == "kunkka_x_marks_the_spot" and E.level > 0 and E.abilityPhase then
+		if E.name == "kunkka_x_marks_the_spot" and Q and Q:CanBeCasted() and E.level > 0 and E.abilityPhase then
 			me:CastAbility(Q,victim.position)
 			Sleep(150+client.latency, "combo")
 		end
@@ -43,12 +43,12 @@ function Tick(tick)
 				me:CastAbility(R,victim.position)
 				Sleep(150+client.latency, "combo")
 			end
-			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
-				me:CastAbility(E)
-				Sleep(150+client.latency, "combo")
-			end
 			if Q and Q:CanBeCasted() and me:CanCast() and R.level > 0 and R.abilityPhase then
 				me:CastAbility(Q,victim.position)
+				Sleep(150+client.latency, "combo")
+			end
+			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
+				me:CastAbility(E)
 				Sleep(150+client.latency, "combo")
 			end
 		end
