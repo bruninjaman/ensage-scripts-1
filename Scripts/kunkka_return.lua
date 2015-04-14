@@ -45,30 +45,31 @@ function Tick(tick)
 
 		if E.name == "kunkka_x_marks_the_spot" and Q and Q:CanBeCasted() and E.level > 0 and E.abilityPhase then
 			me:CastAbility(Q,victim.position)
-			Sleep(150+client.latency, "combo")
+			Sleep(250+client.latency, "combo")
 		end
 		if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
 			me:CastAbility(E)
-			Sleep(150+client.latency, "combo")
+			Sleep(250+client.latency, "combo")
 		end
 
 		if IsKeyDown(toggleKey) and not client.chat then
 
 			if E.name == "kunkka_x_marks_the_spot" and E:CanBeCasted() and me:CanCast() then
 				me:CastAbility(E,victim)
-				Sleep(150+client.latency, "combo")
+				 lastpos = victim.position
+				Sleep(250+client.latency, "combo")
 			end
 			if R and R:CanBeCasted() and me:CanCast() and E.level > 0 and E.abilityPhase then
-				me:CastAbility(R,victim.position)
-				Sleep(150+client.latency, "combo")
+				me:CastAbility(R,lastpos)
+				Sleep(250+client.latency, "combo")
 			end
 			if Q and Q:CanBeCasted() and me:CanCast() and R.level > 0 and R.abilityPhase then
-				me:CastAbility(Q,victim.position)
-				Sleep(150+client.latency, "combo")
+				me:CastAbility(Q,lastpos)
+				Sleep(250+client.latency, "combo")
 			end
 			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
 				me:CastAbility(E)
-				Sleep(150+client.latency, "combo")
+				Sleep(250+client.latency, "combo")
 			end
 		end
 	end
