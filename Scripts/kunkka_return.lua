@@ -47,7 +47,7 @@ function Tick(tick)
 			me:CastAbility(Q,victim.position)
 			Sleep(250+client.latency, "combo")
 		end
-		if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
+		if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/1100)) then
 			me:CastAbility(E)
 			Sleep(250+client.latency, "combo")
 		end
@@ -67,7 +67,7 @@ function Tick(tick)
 				me:CastAbility(Q,lastpos)
 				Sleep(250+client.latency, "combo")
 			end
-			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/100)) then
+			if E.name == "kunkka_return" and me:CanCast() and math.floor(Q.cd*10) == 110 + math.floor((client.latency/1100)) then
 				me:CastAbility(E)
 				Sleep(250+client.latency, "combo")
 			end
