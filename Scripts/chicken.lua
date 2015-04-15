@@ -33,7 +33,7 @@ function Tick(tick)
 	if not PlayingGame() then return end
 	local me = entityList:GetMyHero() local mp = entityList:GetMyPlayer()
 	if activated and SleepCheck("chicken") then
-	local chicken = entityList:FindEntities({classId = CDOTA_Unit_Courier,team = me.team,alive = true})[1]
+	local chicken = entityList:FindEntities({classId = CDOTA_Unit_Courier,team = me.team,alive = true})[1] if not chicken then return end
 		if chicken and chicken:GetAbility(6):CanBeCasted() then
 			chicken:CastAbility(chicken:GetAbility(6))
 			Sleep(250+client.latency, "chicken")
