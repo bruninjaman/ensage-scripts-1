@@ -24,7 +24,7 @@ function Key(msg,code)
 			text.text = "Hello, I'm Waiting for lick your bottle!"
 		else
 			activated = false
-			text.text = "You Dont't need me?, Dont Call me Please! Fucking You"
+			text.text = "You Dont't need me?, Dont Call me again, Your Motherfucker"
 		end
 	end
 end
