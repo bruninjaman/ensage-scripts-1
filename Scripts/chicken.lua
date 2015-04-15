@@ -1,4 +1,4 @@
---<Chicken lick my bottle Please!>>
+--<<Chicken lick my bottle Please!>>
 
 require("libs.ScriptConfig")
 require("libs.Utils")
