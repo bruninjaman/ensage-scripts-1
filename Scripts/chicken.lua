@@ -44,7 +44,7 @@ function Tick(tick)
 			chicken:Follow(me)
 			Sleep(250+client.latency, "chicken")
 		end
-		if GetDistance2D(chicken,me) <= 200 then
+		if GetDistance2D(chicken,me) <= 200 and bottle and bottle.charges == 0  then
 			giveitem = false
 			mp:GiveItem(chicken,bottle)
 			Sleep(250+client.latency, "chicken")
