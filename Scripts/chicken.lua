@@ -15,13 +15,13 @@ y = config.Ycord
 
 local play = false local activated = false local giveitem = false
 local font = drawMgr:CreateFont("chicken","Tahoma",14,500)
-local text = drawMgr:CreateText(x,y,0xFFFF00FF,"Hello, i'm Chicken, I'm working with you....",font) text.visible = false
+local text = drawMgr:CreateText(x,y,0xFFFF00FF,"Hello, I'm Waiting for lick your bottle!",font) text.visible = false
 
 function Key(msg,code)
 	if msg ~= KEY_UP and code == toggleKey and not client.chat then
 		if not activated then
 			activated = true
-			text.text = "i'm Chicken, I'm Working with you...."
+			text.text = "Hello, I'm Waiting for lick your bottle!"
 		else
 			activated = false
 			text.text = "You Dont't need me?, Dont Call me Please! Fucking You"
