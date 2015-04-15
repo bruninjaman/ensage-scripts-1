@@ -39,7 +39,6 @@ function Tick(tick)
 		if bottle and bottle.charges == 0 then
 			giveitem = true
 			chicken:Follow(me)
-			CheckStash(chicken)
 			Boost(chicken)
 			Sleep(250+client.latency, "chicken")
 		end
