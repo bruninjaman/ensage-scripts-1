@@ -13,7 +13,7 @@ toggleKey = config.Hotkey
 x = config.Xcord
 y = config.Ycord
 
-local play = false local activated = false local giveitem = false
+local play = false local activated = false local giveitem = false local safety = false
 local font = drawMgr:CreateFont("chicken","Tahoma",14,500)
 local text = drawMgr:CreateText(x,y,0xFFFF00FF,"Hello, I'm Waiting for lick your bottle!",font) text.visible = false
 
@@ -41,9 +41,12 @@ function Tick(tick)
 				chicken:CastAbility(chicken:GetAbility(1))
 				Boost(chicken)
 				Sleep(250+client.latency, "chicken")
+				safety = false
+			else
+				safety = true
 			end
 		end
-		if activated then
+		if activated and safety then
 			if bottle and bottle.charges == 0 then
 				giveitem = true
 				CheckStash(chicken)
@@ -108,6 +111,7 @@ end
 function Close()
 	activated = false
 	giveitem = false
+	safety = false
 	text.visible = false
 	collectgarbage("collect")
 	if play then
