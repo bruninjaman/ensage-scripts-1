@@ -5,20 +5,17 @@ require("libs.Utils")
 
 local config = ScriptConfig.new()
 config:SetParameter("Hotkey", "Y", config.TYPE_HOTKEY)
+config:SetParameter("distance", 1200)
 config:SetParameter("Xcord", 500)
 config:SetParameter("Ycord", 50)
 config:Load()
 
-toggleKey = config.Hotkey
-x = config.Xcord
-y = config.Ycord
-
 local play = false local activated = false local giveitem = false local safety = false
 local font = drawMgr:CreateFont("chicken","Tahoma",14,500)
-local text = drawMgr:CreateText(x,y,0xFFFF00FF,"Hello, I'm Waiting for lick your bottle!",font) text.visible = false
+local text = drawMgr:CreateText(config.Xcord,config.Ycord,0xFFFF00FF,"Hello, I'm Waiting for lick your bottle!",font) text.visible = false
 
 function Key(msg,code)
-	if msg ~= KEY_UP and code == toggleKey and not client.chat then
+	if msg ~= KEY_UP and code == config.Hotkey and not client.chat then
 		if not activated then
 			activated = true
 			text.text = "Hello, I'm Waiting for lick your bottle!"
@@ -37,7 +34,7 @@ function Tick(tick)
 		local bottle = me:FindItem("item_bottle")
 		local heros = entityList:GetEntities({type=LuaEntity.TYPE_HERO,visible=true,alive=true,team=me:GetEnemyTeam()})
 		for i,v in ipairs(heros) do
-			if GetDistance2D(chicken,v) <= 1200 and chicken:GetAbility(1):CanBeCasted() then
+			if GetDistance2D(chicken,v) <= config.distance and chicken:GetAbility(1):CanBeCasted() then
 				chicken:CastAbility(chicken:GetAbility(1))
 				Boost(chicken)
 				Sleep(250+client.latency, "chicken")
