@@ -33,7 +33,7 @@ function Tick(tick)
 	if not PlayingGame() then return end
 	local me = entityList:GetMyHero() local mp = entityList:GetMyPlayer()
 	if activated and SleepCheck("chicken") then
-	local chicken = entityList:FindEntities({classId = CDOTA_Unit_Courier,team = me.team,alive = true})[1]
+	local chicken = entityList:FindEntities({classId=CDOTA_Unit_Courier,team=me.team,alive=true})[1]
 	if not chicken then return end
 		local bottle = me:FindItem("item_bottle")
 		local heros = entityList:GetEntities({type=LuaEntity.TYPE_HERO,visible=true,alive=true,team=me:GetEnemyTeam()})
