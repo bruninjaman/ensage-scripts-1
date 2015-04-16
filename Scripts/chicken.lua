@@ -35,7 +35,15 @@ function Tick(tick)
 	if activated and SleepCheck("chicken") then
 	local chicken = entityList:FindEntities({classId = CDOTA_Unit_Courier,team = me.team,alive = true})[1]
 	if not chicken then return end
-		local bottle = me:FindItem("item_bottle") 
+		local bottle = me:FindItem("item_bottle")
+		local heros = entityList:GetEntities({type=LuaEntity.TYPE_HERO,visible=true,alive=true,team=me:GetEnemyTeam()})
+		for i,v in ipairs(heros) do
+			if GetDistance2D(chicken,v) <= 900 and chicken:GetAbility(1):CanBeCasted() then
+				chicken:CastAbility(chicken:GetAbility(1))
+				Boost(chicken)
+				Sleep(250+client.latency, "chicken")
+			end
+		end
 		if bottle and bottle.charges == 0 then
 			giveitem = true
 			CheckStash(chicken)
