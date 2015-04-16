@@ -32,9 +32,8 @@ end
 function Tick(tick)
 	if not PlayingGame() then return end
 	local me = entityList:GetMyHero() local mp = entityList:GetMyPlayer()
-	if activated and SleepCheck("chicken") then
 	local chicken = entityList:FindEntities({classId=CDOTA_Unit_Courier,team=me.team,alive=true})[1]
-	if not chicken then return end
+	if chicken and SleepCheck("chicken") then
 		local bottle = me:FindItem("item_bottle")
 		local heros = entityList:GetEntities({type=LuaEntity.TYPE_HERO,visible=true,alive=true,team=me:GetEnemyTeam()})
 		for i,v in ipairs(heros) do
@@ -44,30 +43,32 @@ function Tick(tick)
 				Sleep(250+client.latency, "chicken")
 			end
 		end
-		if bottle and bottle.charges == 0 then
-			giveitem = true
-			CheckStash(chicken)
-			chicken:Follow(me)
-			Boost(chicken)
-			Sleep(250+client.latency, "chicken")
-		end
-		if GetDistance2D(chicken,me) <= 250 and bottle and bottle.charges == 0  then
-			giveitem = false
-			Deliver(chicken)
-			mp:GiveItem(chicken,bottle)
-			Sleep(250+client.latency, "chicken")
-		end
-		local chickenbottle = chicken:FindItem("item_bottle")
-		if chickenbottle and chickenbottle.charges == 0 and chicken:GetAbility(1):CanBeCasted() then
-			chicken:CastAbility(chicken:GetAbility(1))
-			Boost(chicken)
-			Sleep(250+client.latency, "chicken")
-		end
-		if chickenbottle and chickenbottle.charges == 3 and chicken:GetAbility(5):CanBeCasted() then
-			chicken:CastAbility(chicken:GetAbility(5))
-			CheckStash(chicken)
-			Boost(chicken)
-			Sleep(250+client.latency, "chicken")
+		if activated then
+			if bottle and bottle.charges == 0 then
+				giveitem = true
+				CheckStash(chicken)
+				chicken:Follow(me)
+				Boost(chicken)
+				Sleep(250+client.latency, "chicken")
+			end
+			if GetDistance2D(chicken,me) <= 250 and bottle and bottle.charges == 0  then
+				giveitem = false
+				Deliver(chicken)
+				mp:GiveItem(chicken,bottle)
+				Sleep(250+client.latency, "chicken")
+			end
+			local chickenbottle = chicken:FindItem("item_bottle")
+			if chickenbottle and chickenbottle.charges == 0 and chicken:GetAbility(1):CanBeCasted() then
+				chicken:CastAbility(chicken:GetAbility(1))
+				Boost(chicken)
+				Sleep(250+client.latency, "chicken")
+			end
+			if chickenbottle and chickenbottle.charges == 3 and chicken:GetAbility(5):CanBeCasted() then
+				chicken:CastAbility(chicken:GetAbility(5))
+				CheckStash(chicken)
+				Boost(chicken)
+				Sleep(250+client.latency, "chicken")
+			end
 		end
 	end
 end
