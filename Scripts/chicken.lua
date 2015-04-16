@@ -37,7 +37,7 @@ function Tick(tick)
 		local bottle = me:FindItem("item_bottle")
 		local heros = entityList:GetEntities({type=LuaEntity.TYPE_HERO,visible=true,alive=true,team=me:GetEnemyTeam()})
 		for i,v in ipairs(heros) do
-			if GetDistance2D(chicken,v) <= 900 and chicken:GetAbility(1):CanBeCasted() then
+			if GetDistance2D(chicken,v) <= 1200 and chicken:GetAbility(1):CanBeCasted() then
 				chicken:CastAbility(chicken:GetAbility(1))
 				Boost(chicken)
 				Sleep(250+client.latency, "chicken")
