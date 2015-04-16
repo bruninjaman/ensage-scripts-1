@@ -38,12 +38,14 @@ function Tick(tick)
 		local bottle = me:FindItem("item_bottle") 
 		if bottle and bottle.charges == 0 then
 			giveitem = true
+			CheckStash(chicken)
 			chicken:Follow(me)
 			Boost(chicken)
 			Sleep(250+client.latency, "chicken")
 		end
 		if GetDistance2D(chicken,me) <= 250 and bottle and bottle.charges == 0  then
 			giveitem = false
+			Deliver(chicken)
 			mp:GiveItem(chicken,bottle)
 			Sleep(250+client.latency, "chicken")
 		end
@@ -59,6 +61,12 @@ function Tick(tick)
 			Boost(chicken)
 			Sleep(250+client.latency, "chicken")
 		end
+	end
+end
+
+function Deliver(chicken)
+	if chicken and chicken:GetAbility(5):CanBeCasted() then
+		chicken:CastAbility(chicken:GetAbility(5))
 	end
 end
 
