@@ -52,7 +52,7 @@ function Tick(tick)
 			if not euls then
 				if W and W:CanBeCasted() then
 					xyz2(victim,me,W)
-					Sleep(me:GetTurnTime(victim)*1000, "xx")
+					Sleep(W:FindCastPoint()*1000+me:GetTurnTime(victim)*1000, "xx")
 				end
 				if Q and Q:CanBeCasted() then
 					if W and W.cd > 1 then
