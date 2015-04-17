@@ -4,11 +4,9 @@ require("libs.Utils")
 require("libs.Skillshot")
 require("libs.Animations")
 
-config = ScriptConfig.new()
+local config = ScriptConfig.new()
 config:SetParameter("HotKey", "32", config.TYPE_HOTKEY)
 config:Load()
-
-toggleKey = config.HotKey
 
 local play = false local myhero = nil local victim = nil local move = 0 local delay = 0
 
