@@ -18,26 +18,29 @@ function Tick(tick)
 		for _,v in ipairs(creeps) do
 			if GetDistance2D(me,v) < 700 and v.level >= 5 and v.team ~= me.team and v.visible and v.spawned and not v.ancient and v.health > 0 then
 				me:CastAbility(midas,v)
+				Sleep(250+client.latency, "items")
 			end
 		end
 
 		if bloodstone and bloodstone:CanBeCasted() and me.health/me.maxHealth < 0.04 then
 			me:CastAbility(bloodstone,me.position)
+			Sleep(250+client.latency, "items")
 		end
 
 		if bottle and bottle:CanBeCasted() and me:DoesHaveModifier("modifier_fountain_aura_buff") and not me:DoesHaveModifier("modifier_bottle_regeneration") and (me.health < me.maxHealth or me.mana < me.maxMana) then
 			me:CastAbility(bottle)
+			Sleep(250+client.latency, "items")
 		end
 
 		if phaseboots and phaseboots:CanBeCasted() then
 			me:CastAbility(phaseboots)
+			Sleep(250+client.latency, "items")
 		end
 
 		if stick and stick:CanBeCasted() and stick.charges > 0 and me.health/me.maxHealth < 0.3 then
 			me:CastAbility(stick)
+			Sleep(250+client.latency, "items")
 		end
-		
-		Sleep(250+client.latency, "items")
 
 	end
 end
