@@ -30,7 +30,7 @@ function Tick(tick)
 			local euls = me:FindItem("item_cyclone")
 			if euls and tick > delay then
 				if euls and euls:CanBeCasted() then
-					if GetDistance2D(victim,me) <= euls.castRange then
+					if GetDistance2D(victim,me) <= euls.castRange and W and W:CanBeCasted() then
 						me:CastAbility(euls,victim)
 						Sleep(me:GetTurnTime(victim)*1000, "xx")
 						delay = tick + 1700
