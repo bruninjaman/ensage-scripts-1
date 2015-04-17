@@ -29,10 +29,12 @@ function Tick(tick)
 			local W = me:GetAbility(2)
 			local euls = me:FindItem("item_cyclone")
 			if euls and tick > delay then
-				if euls and euls:CanBeCasted() and GetDistance2D(victim,me) <= euls.castRange then
-					me:CastAbility(euls,victim)
-					Sleep(me:GetTurnTime(victim)*1000, "xx")
-					delay = tick + 1700
+				if euls and euls:CanBeCasted() then
+					if GetDistance2D(victim,me) <= euls.castRange then
+						me:CastAbility(euls,victim)
+						Sleep(me:GetTurnTime(victim)*1000, "xx")
+						delay = tick + 1700
+					end
 				end
 				if W and W:CanBeCasted() then
 					if euls and euls.cd > 1 then
