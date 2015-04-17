@@ -2,7 +2,6 @@ require("libs.ScriptConfig")
 require("libs.TargetFind")
 require("libs.Utils")
 
-
 config = ScriptConfig.new()
 config:SetParameter("HotKey", "32", config.TYPE_HOTKEY)
 config:SetParameter("HomeKey", "D", config.TYPE_HOTKEY)
@@ -10,7 +9,6 @@ config:Load()
 
 toggleKey = config.HotKey
 homeKey = config.HomeKey
-
 
 local play = false local myhero = nil local victim = nil
 
@@ -22,8 +20,6 @@ function Tick(tick)
 	local Q = me:GetAbility(1)
 	local E = me:GetAbility(3)
 	local R = me:GetAbility(4)
-
-	local victim = targetFind:GetClosestToMouse(me,2000)
 
 	if me.team == LuaEntity.TEAM_RADIANT then
 		foun = Vector(-7272,-6757,270)
@@ -42,6 +38,8 @@ function Tick(tick)
 			Sleep(250+client.latency, "home")
 		end
 	end
+
+	local victim = targetFind:GetClosestToMouse(100)
 	
 	if victim and SleepCheck("combo") then
 
