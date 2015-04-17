@@ -14,16 +14,16 @@ function Tick(tick)
 	if not PlayingGame() then return end
 	local me = entityList:GetMyHero()
 	local ID = me.classId if ID ~= myhero then return end
-	local victim = targetFind:GetClosestToMouse(me,2000)
+	local victim = targetFind:GetClosestToMouse(100)
 	if IsKeyDown(config.HotKey) and not client.chat then
 		if victim then
 			if tick > move and SleepCheck("xx") then
-				if GetDistance2D(victim,me) <= 600 then
+				if GetDistance2D(victim,me) <= 550 then
 					me:Attack(victim)
 				else
 					me:Follow(victim)
 				end
-				move = tick + 450
+				move = tick + 250
 			end
 			local Q = me:GetAbility(1)
 			local W = me:GetAbility(2)
@@ -52,7 +52,7 @@ function Tick(tick)
 			if not euls then
 				if W and W:CanBeCasted() then
 					xyz2(victim,me,W)
-					Sleep(W:FindCastPoint()*1000+me:GetTurnTime(victim)*1000, "xx")
+					Sleep(me:GetTurnTime(victim)*1000, "xx")
 				end
 				if Q and Q:CanBeCasted() then
 					if W and W.cd > 1 then
