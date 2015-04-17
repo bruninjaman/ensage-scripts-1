@@ -14,9 +14,9 @@ function Tick(tick)
 	
 	if SleepCheck("items") and me.alive and not me:IsInvisible() and not me:IsChanneling() then
 
-		local creeps = entityList:FindEntities({classId=CDOTA_BaseNPC_Creep_Neutral,controllable=false,alive=true,illusion=false})
+		local creeps = entityList:GetEntities(function (v) return v.type == LuaEntity.TYPE_CREEP and v.team ~= me.team and v.alive and v.visible and v.spawned and v.level >= 5 and not v.ancient and v.health > 0 and v.attackRange < 650 and v:GetDistance2D(me) < midas.castRange + 25 end)
 		for _,v in ipairs(creeps) do
-			if GetDistance2D(me,v) < 700 and v.level >= 5 and v.team ~= me.team and v.visible and v.spawned and not v.ancient and v.health > 0 then
+			if midas and midas:CanBeCasted() then
 				me:CastAbility(midas,v)
 				Sleep(250+client.latency, "items")
 			end
